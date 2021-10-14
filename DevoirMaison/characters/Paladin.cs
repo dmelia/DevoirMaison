@@ -1,24 +1,25 @@
 ﻿namespace DevoirMaison
 {
-    //Hitty boi
-    public class Warrior: Character
+    //Pally boi
+    public class Paladin : Character
     {
-        public Warrior(string name)
-        { 
+        public Paladin(string name)
+        {
             Name = name;
-            Defense = 0;
-            AttackSpeed = 1;
-            Damages = 20;
-            MaximumLife = 1500;
-            CurrentLife = 1500;
-            Attack = 150;
-            PowerSpeed = 0.1;
-            _DamageType = DamageType.Normal;
+            Attack = 60;
+            Defense = 145;
+            AttackSpeed = 1.6;
+            Damages = 40;
+            MaximumLife = 250;
+            CurrentLife = 250;
+            PowerSpeed = 0.5;
+            _DamageType = DamageType.Sacred;
             _CharacterType = CharacterType.Human;
         }
 
         public override void SpecialPower(BattleGround battleGround)
         {
+            //Reduces delay to 0 of next hit
             throw new System.NotImplementedException();
         }
 
@@ -29,6 +30,7 @@
 
         public override int RollAttack()
         {
+            //Deals sacred damage
             throw new System.NotImplementedException();
         }
 

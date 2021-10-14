@@ -1,24 +1,25 @@
 ﻿namespace DevoirMaison
 {
-    //Hitty boi
-    public class Warrior: Character
+    //Lighty boi
+    public class Priest : Character
     {
-        public Warrior(string name)
-        { 
+        public Priest(string name)
+        {
             Name = name;
-            Defense = 0;
-            AttackSpeed = 1;
-            Damages = 20;
-            MaximumLife = 1500;
-            CurrentLife = 1500;
-            Attack = 150;
-            PowerSpeed = 0.1;
-            _DamageType = DamageType.Normal;
+            Attack = 100;
+            Defense = 125;
+            AttackSpeed = 1.5;
+            Damages = 90;
+            MaximumLife = 150;
+            CurrentLife = 150;
+            PowerSpeed = 1.0;
+            _DamageType = DamageType.Sacred;
             _CharacterType = CharacterType.Human;
         }
 
         public override void SpecialPower(BattleGround battleGround)
         {
+            //Lighty boi heals himself for 10% of his max life
             throw new System.NotImplementedException();
         }
 
@@ -44,6 +45,8 @@
 
         public override Character TargetCharacterAndAttack(BattleGround battleGround)
         {
+            //Targets undead in priority
+            //Deals sacred damage
             throw new System.NotImplementedException();
         }
     }

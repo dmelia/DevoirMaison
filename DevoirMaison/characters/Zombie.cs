@@ -16,19 +16,22 @@ namespace DevoirMaison
             Attack = 150;
             PowerSpeed = 0.1;
             _DamageType = DamageType.Normal;
+            _CharacterType = CharacterType.Undead;
         }
 
-        public override void SpecialPower()
+        public override void SpecialPower(BattleGround battleGround)
         {
             Console.WriteLine("Bitey Boi eats a fresh cadaver");
             //consumes a random dead player, gain hp equal to the dead players max life
             throw new System.NotImplementedException();
         }
 
-        public override void ReceiveDamage(float percentageValue, int flatValue, DamageType damageType)
+        public override bool ReceiveDamage(Damage damage)
         {
             //Immune to poison
             //Defense roll always equal to 0
+            //Double damage from Sacred
+            return true;
         }
 
         public override int RollAttack()
@@ -45,6 +48,11 @@ namespace DevoirMaison
         {
             //Bitey boi's attack delay roll is always 0
             return 0;
+        }
+
+        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        {
+            throw new NotImplementedException();
         }
     }
 }

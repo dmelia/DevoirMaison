@@ -20,14 +20,25 @@
 
         public double PowerSpeed { get; set; }
 
-        public abstract void SpecialPower();
+        public bool IsDead { get; set; } = false;
 
-        public abstract void ReceiveDamage(float percentageValue, int flatValue, DamageType damageType);
+        public bool IsDouble { get; set; } = false;
+
+        public CharacterType _CharacterType { get; set; }
+
+        public CharacterStatus _CharacterStatus { get; set; } = CharacterStatus.Normal;
+
+        public abstract void SpecialPower(BattleGround battleGround);
+
+        // Returns true if hit succeeded
+        public abstract bool ReceiveDamage(Damage damage);
 
         public abstract int RollAttack();
 
         public abstract float RollSpeed();
 
         public abstract int RollAttackDelay();
+
+        public abstract Character TargetCharacterAndAttack(BattleGround battleGround);
     }
 }

@@ -20,9 +20,10 @@ namespace DevoirMaison
             Attack = BaseAttack;
             PowerSpeed = BasePowerSpeed;
             _DamageType = DamageType.Normal;
+            _CharacterType = CharacterType.Human;
         }
 
-        public override void SpecialPower()
+        public override void SpecialPower(BattleGround battleGround)
         {
             Console.WriteLine("Slappy boi gets stronger!");
             var lifePercentageLost = Math.Floor((CurrentLife - MaximumLife) * (double) MaximumLife / 10);
@@ -36,7 +37,7 @@ namespace DevoirMaison
             }
         }
 
-        public override void ReceiveDamage(float percentageValue, int flatValue, DamageType damageType)
+        public override bool ReceiveDamage(Damage damage)
         {
             throw new System.NotImplementedException();
         }
@@ -52,6 +53,11 @@ namespace DevoirMaison
         }
 
         public override int RollAttackDelay()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Character TargetCharacterAndAttack(BattleGround battleGround)
         {
             throw new NotImplementedException();
         }

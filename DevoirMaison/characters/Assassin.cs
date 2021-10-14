@@ -1,24 +1,25 @@
 ﻿namespace DevoirMaison
 {
-    //Hitty boi
-    public class Warrior: Character
+    //Dodgy boi
+    public class Assassin : Character
     {
-        public Warrior(string name)
-        { 
+        public Assassin(string name)
+        {
             Name = name;
-            Defense = 0;
-            AttackSpeed = 1;
-            Damages = 20;
-            MaximumLife = 1500;
-            CurrentLife = 1500;
             Attack = 150;
-            PowerSpeed = 0.1;
-            _DamageType = DamageType.Normal;
+            Defense = 100;
+            AttackSpeed = 1;
+            Damages = 100;
+            MaximumLife = 185;
+            CurrentLife = 185;
+            PowerSpeed = 0.5;
+            _DamageType = DamageType.Sacred;
             _CharacterType = CharacterType.Human;
         }
 
         public override void SpecialPower(BattleGround battleGround)
         {
+            _CharacterStatus = CharacterStatus.Hidden;
             throw new System.NotImplementedException();
         }
 
@@ -44,6 +45,8 @@
 
         public override Character TargetCharacterAndAttack(BattleGround battleGround)
         {
+            //Passive : attacks by the Dodgy boi deal 100% normal damage and 10% poison damage
+            //If the Dodgy boi deals more than half of the targets life in damage, a critical hit is inflicted, killing the enemy
             throw new System.NotImplementedException();
         }
     }

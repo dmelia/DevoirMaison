@@ -1,29 +1,31 @@
 ﻿namespace DevoirMaison
 {
-    //Hitty boi
-    public class Warrior: Character
+    //Sucky boi
+    public class Vampire : Character
     {
-        public Warrior(string name)
-        { 
+        public Vampire(string name)
+        {
             Name = name;
-            Defense = 0;
-            AttackSpeed = 1;
-            Damages = 20;
-            MaximumLife = 1500;
-            CurrentLife = 1500;
-            Attack = 150;
-            PowerSpeed = 0.1;
+            Attack = 125;
+            Defense = 125;
+            AttackSpeed = 2;
+            Damages = 50;
+            MaximumLife = 150;
+            CurrentLife = 150;
+            PowerSpeed = 0.2;
             _DamageType = DamageType.Normal;
-            _CharacterType = CharacterType.Human;
+            _CharacterType = CharacterType.Undead;
         }
 
         public override void SpecialPower(BattleGround battleGround)
         {
+            //Selects a random target and increases its attack delay of an amount equal to damage that the sucky boi received since the last sue of his power
             throw new System.NotImplementedException();
         }
 
         public override bool ReceiveDamage(Damage damage)
         {
+            //Double damage from Sacred
             throw new System.NotImplementedException();
         }
 
@@ -44,6 +46,7 @@
 
         public override Character TargetCharacterAndAttack(BattleGround battleGround)
         {
+            //Sucky boi heals himself for 50% of damage dealt to target
             throw new System.NotImplementedException();
         }
     }

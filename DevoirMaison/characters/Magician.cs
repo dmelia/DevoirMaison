@@ -1,17 +1,17 @@
 ﻿namespace DevoirMaison
 {
-    //Hitty boi
-    public class Warrior: Character
+    //Firery boi
+    public class Magician : Character
     {
-        public Warrior(string name)
-        { 
+        public Magician(string name)
+        {
             Name = name;
-            Defense = 0;
-            AttackSpeed = 1;
-            Damages = 20;
-            MaximumLife = 1500;
-            CurrentLife = 1500;
-            Attack = 150;
+            Attack = 75;
+            Defense = 125;
+            AttackSpeed = 1.5;
+            Damages = 100;
+            MaximumLife = 125;
+            CurrentLife = 125;
             PowerSpeed = 0.1;
             _DamageType = DamageType.Normal;
             _CharacterType = CharacterType.Human;
@@ -19,6 +19,13 @@
 
         public override void SpecialPower(BattleGround battleGround)
         {
+            //Special is an attack
+            //Targets multiple enemies
+            //When it hits 1st enemy, damage is reduced by 10% (from total initial damage)
+            //After hit, targets another enemy
+            //continues hitting enemies and reducing damage by 10% until damage is 0 or that a player was able to defend.
+            //If 1st target was able to defend, it does not chain
+            //Initial damage is attack damage multiplied by 5
             throw new System.NotImplementedException();
         }
 
