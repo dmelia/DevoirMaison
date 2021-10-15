@@ -5,6 +5,8 @@ namespace DevoirMaison
 {
     public class BattleGround
     {
+        //If set to false, battle has not started and players cannot use skills or attacks
+        public bool BattleStarted { get; set; } = false;
         public List<Character> Characters
         {
             get;
@@ -16,6 +18,7 @@ namespace DevoirMaison
             this.Characters = new List<Character>();
         }
 
+        //Populates the battle ground with characters
         public void PopulateBattleGround()
         {
             Characters.Add(new Alchemist("Potiony-boi", this));
@@ -34,11 +37,14 @@ namespace DevoirMaison
 
         public void StartBattle()
         {
+            Console.WriteLine("Characters are joining the battle!");
             foreach (var character in Characters)
             {
-                Console.WriteLine("Oh it's on now!");
                 character.StartLife();
             }
+
+            Console.WriteLine("Battle starting!");
+            BattleStarted = true;
         }
     }
 }
