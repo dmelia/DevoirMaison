@@ -1,9 +1,9 @@
 ﻿namespace DevoirMaison
 {
-    //Sucky boi
+    //Bloody boi
     public class Vampire : Character
     {
-        public Vampire(string name)
+        public Vampire(string name, BattleGround battleGround)
         {
             Name = name;
             Attack = 125;
@@ -13,11 +13,12 @@
             MaximumLife = 150;
             CurrentLife = 150;
             PowerSpeed = 0.2;
-            _DamageType = DamageType.Normal;
-            _CharacterType = CharacterType.Undead;
+            DamageType = DamageType.Normal;
+            CharacterType = CharacterType.Undead;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             //Selects a random target and increases its attack delay of an amount equal to damage that the sucky boi received since the last sue of his power
             throw new System.NotImplementedException();
@@ -34,19 +35,14 @@
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
+        public override Character TargetCharacterAndAttack()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
-        {
-            //Sucky boi heals himself for 50% of damage dealt to target
+            //Bloody boi heals himself for 50% of damage dealt to target
             throw new System.NotImplementedException();
         }
     }

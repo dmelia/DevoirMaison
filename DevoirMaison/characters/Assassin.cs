@@ -3,7 +3,7 @@
     //Dodgy boi
     public class Assassin : Character
     {
-        public Assassin(string name)
+        public Assassin(string name, BattleGround battleGround)
         {
             Name = name;
             Attack = 150;
@@ -13,13 +13,14 @@
             MaximumLife = 185;
             CurrentLife = 185;
             PowerSpeed = 0.5;
-            _DamageType = DamageType.Sacred;
-            _CharacterType = CharacterType.Human;
+            DamageType = DamageType.Sacred;
+            CharacterType = CharacterType.Human;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
-            _CharacterStatus = CharacterStatus.Hidden;
+            CharacterStatus = CharacterStatus.Hidden;
             throw new System.NotImplementedException();
         }
 
@@ -33,17 +34,12 @@
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             //Passive : attacks by the Dodgy boi deal 100% normal damage and 10% poison damage
             //If the Dodgy boi deals more than half of the targets life in damage, a critical hit is inflicted, killing the enemy

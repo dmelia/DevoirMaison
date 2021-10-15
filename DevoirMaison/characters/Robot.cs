@@ -6,7 +6,7 @@ namespace DevoirMaison
     public class Robot : Character
     {
         
-        public Robot(string name)
+        public Robot(string name, BattleGround battleGround)
         {
             Name = name;
             Attack = 25;
@@ -16,11 +16,12 @@ namespace DevoirMaison
             MaximumLife = 275;
             CurrentLife = 275;
             PowerSpeed = 0.5;
-            _DamageType = DamageType.Normal;
-            _CharacterType = CharacterType.Machine;
+            DamageType = DamageType.Normal;
+            CharacterType = CharacterType.Machine;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             Console.WriteLine("Robot {0}, increased its attack by 50% !");
             Attack = (int) (Attack + Math.Ceiling(Attack * 0.5));
@@ -38,19 +39,13 @@ namespace DevoirMaison
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             //Rolls just add 50 to stat
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            //Rolls just add 50 to stat
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             throw new NotImplementedException();
         }

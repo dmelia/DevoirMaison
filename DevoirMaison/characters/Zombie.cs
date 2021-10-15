@@ -5,7 +5,7 @@ namespace DevoirMaison
     //Bitey boi
     public class Zombie: Character
     {
-        public Zombie(string name)
+        public Zombie(string name, BattleGround battleGround)
         { 
             Name = name;
             Defense = 0;
@@ -15,11 +15,12 @@ namespace DevoirMaison
             CurrentLife = 1500;
             Attack = 150;
             PowerSpeed = 0.1;
-            _DamageType = DamageType.Normal;
-            _CharacterType = CharacterType.Undead;
+            DamageType = DamageType.Normal;
+            CharacterType = CharacterType.Undead;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             Console.WriteLine("Bitey Boi eats a fresh cadaver");
             //consumes a random dead player, gain hp equal to the dead players max life
@@ -36,21 +37,16 @@ namespace DevoirMaison
 
         public override int RollAttack()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override float RollSpeed()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int RollAttackDelay()
-        {
             //Bitey boi's attack delay roll is always 0
-            return 0;
+            throw new System.NotImplementedException();
         }
 
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override int RollSpeed()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override Character TargetCharacterAndAttack()
         {
             throw new NotImplementedException();
         }

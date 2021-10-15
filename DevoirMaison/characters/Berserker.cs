@@ -9,7 +9,7 @@ namespace DevoirMaison
         private int BaseAttack = 50;
         private int BaseDamages = 20;
 
-        public Berserker(string name)
+        public Berserker(string name, BattleGround battleGround)
         {
             Name = name;
             Defense = 50;
@@ -19,11 +19,12 @@ namespace DevoirMaison
             CurrentLife = 400;
             Attack = BaseAttack;
             PowerSpeed = BasePowerSpeed;
-            _DamageType = DamageType.Normal;
-            _CharacterType = CharacterType.Human;
+            DamageType = DamageType.Normal;
+            CharacterType = CharacterType.Human;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             Console.WriteLine("Slappy boi gets stronger!");
             var lifePercentageLost = Math.Floor((CurrentLife - MaximumLife) * (double) MaximumLife / 10);
@@ -47,17 +48,12 @@ namespace DevoirMaison
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             throw new NotImplementedException();
         }

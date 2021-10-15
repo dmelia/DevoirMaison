@@ -1,10 +1,14 @@
-﻿namespace DevoirMaison
+﻿using System;
+using System.Timers;
+
+namespace DevoirMaison
 {
     public abstract class Character
     {
+        public BattleGround battleGround { get; set; }
         public string Name { get; set; }
 
-        public DamageType _DamageType { get; set; }
+        public DamageType DamageType { get; set; }
 
         public int Attack { get; set; }
 
@@ -19,26 +23,41 @@
         public int CurrentLife { get; set; }
 
         public double PowerSpeed { get; set; }
+        
+        public CharacterType CharacterType { get; set; }
 
         public bool IsDead { get; set; } = false;
 
+        public bool IsCorpseConsumed { get; set; } = false;
+
         public bool IsDouble { get; set; } = false;
 
-        public CharacterType _CharacterType { get; set; }
+        public CharacterStatus CharacterStatus { get; set; } = CharacterStatus.Normal;
 
-        public CharacterStatus _CharacterStatus { get; set; } = CharacterStatus.Normal;
-
-        public abstract void SpecialPower(BattleGround battleGround);
+        public abstract void SpecialPower();
 
         // Returns true if hit succeeded
         public abstract bool ReceiveDamage(Damage damage);
 
-        public abstract int RollAttack();
+        public virtual int RollAttack()
+        {
+            return Attack + DiceService.RollDice(1, 100);
+        }
 
-        public abstract float RollSpeed();
+        public virtual int RollSpeed()
+        {
+            return (int) (Math.Ceiling(1000 / AttackSpeed) - DiceService.RollDice(1, 100));
+        }
+        public abstract Character TargetCharacterAndAttack();
+        
 
-        public abstract int RollAttackDelay();
-
-        public abstract Character TargetCharacterAndAttack(BattleGround battleGround);
+        private static Timer timer;
+        public void StartLife()
+        {
+            Console.WriteLine("{0} is joining the fight ! The character is a {1} {2}", Name, CharacterType, this.GetType().Name);
+            timer = new Timer();
+            timer.AutoReset = false;
+            timer.Elapsed += (sender, args) => { if(IsDead) timer.Stop(); };
+        }
     }
 }

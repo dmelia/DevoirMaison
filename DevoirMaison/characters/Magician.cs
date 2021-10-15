@@ -1,9 +1,9 @@
 ﻿namespace DevoirMaison
 {
-    //Firery boi
+    //Brainy boi
     public class Magician : Character
     {
-        public Magician(string name)
+        public Magician(string name, BattleGround battleGround)
         {
             Name = name;
             Attack = 75;
@@ -13,11 +13,12 @@
             MaximumLife = 125;
             CurrentLife = 125;
             PowerSpeed = 0.1;
-            _DamageType = DamageType.Normal;
-            _CharacterType = CharacterType.Human;
+            DamageType = DamageType.Normal;
+            CharacterType = CharacterType.Human;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             //Special is an attack
             //Targets multiple enemies
@@ -39,17 +40,12 @@
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             throw new System.NotImplementedException();
         }

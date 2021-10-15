@@ -3,7 +3,7 @@
     //Hitty boi
     public class Warrior: Character
     {
-        public Warrior(string name)
+        public Warrior(string name, BattleGround battleGround)
         { 
             Name = name;
             Defense = 0;
@@ -13,11 +13,12 @@
             CurrentLife = 1500;
             Attack = 150;
             PowerSpeed = 0.1;
-            _DamageType = DamageType.Normal;
-            _CharacterType = CharacterType.Human;
+            DamageType = DamageType.Normal;
+            CharacterType = CharacterType.Human;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             throw new System.NotImplementedException();
         }
@@ -32,17 +33,12 @@
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             throw new System.NotImplementedException();
         }

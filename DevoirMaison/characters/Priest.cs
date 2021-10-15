@@ -3,7 +3,7 @@
     //Lighty boi
     public class Priest : Character
     {
-        public Priest(string name)
+        public Priest(string name, BattleGround battleGround)
         {
             Name = name;
             Attack = 100;
@@ -13,11 +13,13 @@
             MaximumLife = 150;
             CurrentLife = 150;
             PowerSpeed = 1.0;
-            _DamageType = DamageType.Sacred;
-            _CharacterType = CharacterType.Human;
+            DamageType = DamageType.Sacred;
+            CharacterType = CharacterType.Human;
+            base.battleGround = battleGround;
+            
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             //Lighty boi heals himself for 10% of his max life
             throw new System.NotImplementedException();
@@ -33,17 +35,12 @@
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             //Targets undead in priority
             //Deals sacred damage

@@ -3,7 +3,7 @@
     //Potion-y boi
     public class Alchemist: Character
     {
-        public Alchemist(string name)
+        public Alchemist(string name, BattleGround battleGround)
         {
             Name = name;
             Attack = 50;
@@ -13,11 +13,12 @@
             MaximumLife = 150;
             CurrentLife = 150;
             PowerSpeed = 0.1;
-            _DamageType = DamageType.Sacred;
-            _CharacterType = CharacterType.Human;
+            DamageType = DamageType.Sacred;
+            CharacterType = CharacterType.Human;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             //Exchange current life value with highest current life value of any hero in combat
             //After trade, new values of current life cannot exceed maximum life
@@ -35,19 +36,13 @@
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             //rolls are 1 - 200
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            //rolls are 1 - 200
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             //All characters have 50% chance to be targeted by the Alchemist's attack
             //All characters are considered as secondary targets (can hit even hidden characters)

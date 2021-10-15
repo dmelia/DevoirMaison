@@ -6,6 +6,7 @@ namespace DevoirMaison
     {
         static void Main(string[] args)
         {
+            BattleGround battleGround = new BattleGround();
             
         }
     }

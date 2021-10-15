@@ -3,7 +3,7 @@
     //Pally boi
     public class Paladin : Character
     {
-        public Paladin(string name)
+        public Paladin(string name, BattleGround battleGround)
         {
             Name = name;
             Attack = 60;
@@ -13,11 +13,12 @@
             MaximumLife = 250;
             CurrentLife = 250;
             PowerSpeed = 0.5;
-            _DamageType = DamageType.Sacred;
-            _CharacterType = CharacterType.Human;
+            DamageType = DamageType.Sacred;
+            CharacterType = CharacterType.Human;
+            base.battleGround = battleGround;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             //Reduces delay to 0 of next hit
             throw new System.NotImplementedException();
@@ -34,17 +35,12 @@
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             throw new System.NotImplementedException();
         }

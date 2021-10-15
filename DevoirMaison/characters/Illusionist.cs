@@ -3,7 +3,7 @@
     //Clony boi
     public class Illusionist : Character
     {
-        public Illusionist(string name)
+        public Illusionist(string name, BattleGround battleGround)
         {
             Name = name;
             Defense = 75;
@@ -13,18 +13,19 @@
             CurrentLife = 100;
             Attack = 75;
             PowerSpeed = 0.5;
-            _DamageType = DamageType.Normal;
-            _CharacterType = CharacterType.Human;
+            DamageType = DamageType.Normal;
+            CharacterType = CharacterType.Human;
+            base.battleGround = battleGround;
         }
 
         private Illusionist CreateDouble()
         {
-            Illusionist _double = new Illusionist("Double");
+            Illusionist _double = new Illusionist("Double", battleGround);
             _double.IsDouble = true;
             return _double;
         }
 
-        public override void SpecialPower(BattleGround battleGround)
+        public override void SpecialPower()
         {
             //Creates a double of himself
             //Doubles can cumulate
@@ -48,17 +49,12 @@
             throw new System.NotImplementedException();
         }
 
-        public override float RollSpeed()
+        public override int RollSpeed()
         {
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttackDelay()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack(BattleGround battleGround)
+        public override Character TargetCharacterAndAttack()
         {
             throw new System.NotImplementedException();
         }
