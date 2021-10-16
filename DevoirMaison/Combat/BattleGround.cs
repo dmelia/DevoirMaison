@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DevoirMaison
 {
@@ -45,6 +46,11 @@ namespace DevoirMaison
 
             Console.WriteLine("Battle starting!");
             BattleStarted = true;
+        }
+
+        public bool ArePlayersAlive()
+        {
+            return Characters.Any(character => character.IsDead);
         }
     }
 }

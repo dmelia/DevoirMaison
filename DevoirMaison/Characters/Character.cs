@@ -23,7 +23,19 @@ namespace DevoirMaison
         public int CurrentLife { get; set; }
 
         public double PowerSpeed { get; set; }
+
+        public DateTime LastAttackDate { get; set; }
+
+        public DateTime LastPowerDate { get; set; }
+
+        public int AttackCooldown { get; set; }
+
+        public int PowerCooldown { get; set; }
         
+        public DateTime LastPoisonHitDate { get; set; }
+        
+        public int PoisonCounter { get; set; }
+
         public CharacterType CharacterType { get; set; }
 
         public bool IsDead { get; set; } = false;
@@ -48,16 +60,22 @@ namespace DevoirMaison
         {
             return (int) (Math.Ceiling(1000 / AttackSpeed) - DiceService.RollDice(1, 100));
         }
+
         public abstract Character TargetCharacterAndAttack();
-        
+
 
         private static Timer timer;
+
         public void StartLife()
         {
-            Console.WriteLine("{0} is joining the fight ! The character is a {1} {2}", Name, CharacterType, this.GetType().Name);
+            Console.WriteLine("{0} is joining the fight ! The character is a {1} {2}", Name, CharacterType,
+                this.GetType().Name);
             timer = new Timer();
             timer.AutoReset = false;
-            timer.Elapsed += (sender, args) => { if(IsDead) timer.Stop(); };
+            timer.Elapsed += (sender, args) =>
+            {
+                if (IsDead) timer.Stop();
+            };
         }
     }
 }
