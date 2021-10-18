@@ -1,4 +1,6 @@
-﻿namespace DevoirMaison
+﻿using DevoirMaison.Combat;
+
+namespace DevoirMaison.Characters
 {
     //Potion-y boi
     public class Alchemist: Character
@@ -13,7 +15,7 @@
             MaximumLife = 150;
             CurrentLife = 150;
             PowerSpeed = 0.1;
-            DamageType = DamageType.Sacred;
+            BaseDamageType = DamageType.Sacred;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
         }
@@ -22,11 +24,6 @@
         {
             //Exchange current life value with highest current life value of any hero in combat
             //After trade, new values of current life cannot exceed maximum life
-            throw new System.NotImplementedException();
-        }
-
-        public override bool ReceiveDamage(Damage damage)
-        {
             throw new System.NotImplementedException();
         }
 
@@ -41,13 +38,9 @@
             //rolls are 1 - 200
             throw new System.NotImplementedException();
         }
-
-        public override Character TargetCharacterAndAttack()
-        {
+        
             //All characters have 50% chance to be targeted by the Alchemist's attack
             //All characters are considered as secondary targets (can hit even hidden characters)
             //100% of damage dealt as poison and 50% of damage dealt as normal
-            throw new System.NotImplementedException();
-        }
     }
 }

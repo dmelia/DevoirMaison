@@ -1,4 +1,6 @@
-﻿namespace DevoirMaison
+﻿using DevoirMaison.Combat;
+
+namespace DevoirMaison.Characters
 {
     //Pally boi
     public class Paladin : Character
@@ -13,7 +15,7 @@
             MaximumLife = 250;
             CurrentLife = 250;
             PowerSpeed = 0.5;
-            DamageType = DamageType.Sacred;
+            BaseDamageType = DamageType.Sacred;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
         }
@@ -24,11 +26,6 @@
             throw new System.NotImplementedException();
         }
 
-        public override bool ReceiveDamage(Damage damage)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override int RollAttack()
         {
             //Deals sacred damage
@@ -36,11 +33,6 @@
         }
 
         public override int RollSpeed()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack()
         {
             throw new System.NotImplementedException();
         }

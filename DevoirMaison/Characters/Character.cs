@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Timers;
+using DevoirMaison.Combat;
 
-namespace DevoirMaison
+namespace DevoirMaison.Characters
 {
     public abstract class Character
     {
         public BattleGround battleGround { get; set; }
         public string Name { get; set; }
 
-        public DamageType DamageType { get; set; }
+        public DamageType BaseDamageType { get; set; }
 
         public int Attack { get; set; }
 
@@ -48,9 +49,6 @@ namespace DevoirMaison
 
         public abstract void SpecialPower();
 
-        // Returns true if hit succeeded
-        public abstract bool ReceiveDamage(Damage damage);
-
         public virtual int RollAttack()
         {
             return Attack + DiceService.RollDice(1, 100);
@@ -61,7 +59,14 @@ namespace DevoirMaison
             return (int) (Math.Ceiling(1000 / AttackSpeed) - DiceService.RollDice(1, 100));
         }
 
-        public abstract Character TargetCharacterAndAttack();
+        public void GainLife(int amount)
+        {
+            CurrentLife += amount;
+            if (CurrentLife > MaximumLife)
+            {
+                CurrentLife = MaximumLife;
+            }
+        }
 
 
         private static Timer timer;

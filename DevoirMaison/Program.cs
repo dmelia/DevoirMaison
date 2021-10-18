@@ -1,4 +1,5 @@
 ﻿using System;
+using DevoirMaison.Combat;
 
 namespace DevoirMaison
 {

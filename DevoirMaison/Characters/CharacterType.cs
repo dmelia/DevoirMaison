@@ -1,4 +1,4 @@
-﻿namespace DevoirMaison
+﻿namespace DevoirMaison.Characters
 {
     public enum CharacterType
     {

@@ -1,4 +1,6 @@
-﻿namespace DevoirMaison
+﻿using DevoirMaison.Combat;
+
+namespace DevoirMaison.Characters
 {
     //Clony boi
     public class Illusionist : Character
@@ -13,7 +15,7 @@
             CurrentLife = 100;
             Attack = 75;
             PowerSpeed = 0.5;
-            DamageType = DamageType.Normal;
+            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
         }
@@ -33,29 +35,12 @@
             //Effectively, making a double with 1 current HP is enough
             throw new System.NotImplementedException();
         }
-
-        public override bool ReceiveDamage(Damage damage)
-        {
-            if (IsDouble)
-            {
-                //
-            }
-            throw new System.NotImplementedException();
-        }
+        
+        // If double is hit, it instantly dies, leaving no corpse
 
         public override int RollAttack()
         {
             //For each double in combat (that's alive), gain 10 Attack
-            throw new System.NotImplementedException();
-        }
-
-        public override int RollSpeed()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack()
-        {
             throw new System.NotImplementedException();
         }
     }

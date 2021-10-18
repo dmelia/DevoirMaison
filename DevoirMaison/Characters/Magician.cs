@@ -1,4 +1,6 @@
-﻿namespace DevoirMaison
+﻿using DevoirMaison.Combat;
+
+namespace DevoirMaison.Characters
 {
     //Brainy boi
     public class Magician : Character
@@ -13,7 +15,7 @@
             MaximumLife = 125;
             CurrentLife = 125;
             PowerSpeed = 0.1;
-            DamageType = DamageType.Normal;
+            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
         }
@@ -30,22 +32,12 @@
             throw new System.NotImplementedException();
         }
 
-        public override bool ReceiveDamage(Damage damage)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override int RollAttack()
         {
             throw new System.NotImplementedException();
         }
 
         public override int RollSpeed()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack()
         {
             throw new System.NotImplementedException();
         }

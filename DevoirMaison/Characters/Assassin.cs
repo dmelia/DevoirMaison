@@ -1,4 +1,6 @@
-﻿namespace DevoirMaison
+﻿using DevoirMaison.Combat;
+
+namespace DevoirMaison.Characters
 {
     //Dodgy boi
     public class Assassin : Character
@@ -13,7 +15,7 @@
             MaximumLife = 185;
             CurrentLife = 185;
             PowerSpeed = 0.5;
-            DamageType = DamageType.Sacred;
+            BaseDamageType = DamageType.Sacred;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
         }
@@ -21,11 +23,6 @@
         public override void SpecialPower()
         {
             CharacterStatus = CharacterStatus.Hidden;
-            throw new System.NotImplementedException();
-        }
-
-        public override bool ReceiveDamage(Damage damage)
-        {
             throw new System.NotImplementedException();
         }
 
@@ -38,12 +35,8 @@
         {
             throw new System.NotImplementedException();
         }
-
-        public override Character TargetCharacterAndAttack()
-        {
+        
             //Passive : attacks by the Dodgy boi deal 100% normal damage and 10% poison damage
             //If the Dodgy boi deals more than half of the targets life in damage, a critical hit is inflicted, killing the enemy
-            throw new System.NotImplementedException();
         }
-    }
 }

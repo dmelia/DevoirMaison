@@ -1,4 +1,6 @@
-﻿namespace DevoirMaison
+﻿using DevoirMaison.Combat;
+
+namespace DevoirMaison.Characters
 {
     public class Necromancer : Character 
     {
@@ -13,7 +15,7 @@
             MaximumLife = 275;
             CurrentLife = 275;
             PowerSpeed = 5;
-            DamageType = DamageType.Normal;
+            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Undead;
             base.battleGround = battleGround;
         }
@@ -23,12 +25,6 @@
             //If no one is dead, gain camouflage
             
             //Each time a fighter dies, the bony boi gains 5 attack/5 defense/50 life/50 max life
-            throw new System.NotImplementedException();
-        }
-
-        public override bool ReceiveDamage(Damage damage)
-        {
-            //Double damage from Sacred
             throw new System.NotImplementedException();
         }
 
@@ -44,10 +40,7 @@
             throw new System.NotImplementedException();
         }
 
-        public override Character TargetCharacterAndAttack()
-        {
-            //Deals 50% normal damage, 50% poison damage
-            throw new System.NotImplementedException();
-        }
+        //Deals 50% normal damage, 50% poison damage
+
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DevoirMaison.Characters;
 
-namespace DevoirMaison
+namespace DevoirMaison.Combat
 {
     public class BattleGround
     {
@@ -51,6 +52,16 @@ namespace DevoirMaison
         public bool ArePlayersAlive()
         {
             return Characters.Any(character => character.IsDead);
+        }
+
+        public Character FindEdibleCorpse()
+        {
+            return Characters.OrderByDescending(character => character.MaximumLife).First(character => !character.IsCorpseConsumed);
+        }
+
+        public List<Character> FindTargetableCharacters()
+        {
+            return Characters.FindAll(character => !character.IsDead);
         }
     }
 }

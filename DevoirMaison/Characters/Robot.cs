@@ -1,6 +1,7 @@
 ﻿using System;
+using DevoirMaison.Combat;
 
-namespace DevoirMaison
+namespace DevoirMaison.Characters
 {
     //Shiny boi
     public class Robot : Character
@@ -16,7 +17,7 @@ namespace DevoirMaison
             MaximumLife = 275;
             CurrentLife = 275;
             PowerSpeed = 0.5;
-            DamageType = DamageType.Normal;
+            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Machine;
             base.battleGround = battleGround;
         }
@@ -27,11 +28,9 @@ namespace DevoirMaison
             Attack = (int) (Attack + Math.Ceiling(Attack * 0.5));
         }
 
-        public override bool ReceiveDamage(Damage damage)
-        {
+      
             //Immune to poison
-            throw new System.NotImplementedException();
-        }
+      
 
         public override int RollAttack()
         {
@@ -43,11 +42,6 @@ namespace DevoirMaison
         {
             //Rolls just add 50 to stat
             throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack()
-        {
-            throw new NotImplementedException();
         }
     }
 }

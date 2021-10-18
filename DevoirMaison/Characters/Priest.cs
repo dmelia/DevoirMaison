@@ -1,4 +1,6 @@
-﻿namespace DevoirMaison
+﻿using DevoirMaison.Combat;
+
+namespace DevoirMaison.Characters
 {
     //Lighty boi
     public class Priest : Character
@@ -13,7 +15,7 @@
             MaximumLife = 150;
             CurrentLife = 150;
             PowerSpeed = 1.0;
-            DamageType = DamageType.Sacred;
+            BaseDamageType = DamageType.Sacred;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
             
@@ -22,11 +24,6 @@
         public override void SpecialPower()
         {
             //Lighty boi heals himself for 10% of his max life
-            throw new System.NotImplementedException();
-        }
-
-        public override bool ReceiveDamage(Damage damage)
-        {
             throw new System.NotImplementedException();
         }
 
@@ -40,11 +37,8 @@
             throw new System.NotImplementedException();
         }
 
-        public override Character TargetCharacterAndAttack()
-        {
+
             //Targets undead in priority
             //Deals sacred damage
-            throw new System.NotImplementedException();
-        }
     }
 }

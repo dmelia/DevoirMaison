@@ -1,4 +1,6 @@
-﻿namespace DevoirMaison
+﻿using DevoirMaison.Combat;
+
+namespace DevoirMaison.Characters
 {
     //Bloody boi
     public class Vampire : Character
@@ -13,7 +15,7 @@
             MaximumLife = 150;
             CurrentLife = 150;
             PowerSpeed = 0.2;
-            DamageType = DamageType.Normal;
+            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Undead;
             base.battleGround = battleGround;
         }
@@ -24,13 +26,10 @@
             throw new System.NotImplementedException();
         }
 
-        public override bool ReceiveDamage(Damage damage)
-        {
+  
             //Double damage from Sacred
-            throw new System.NotImplementedException();
-        }
 
-        public override int RollAttack()
+            public override int RollAttack()
         {
             throw new System.NotImplementedException();
         }
@@ -39,11 +38,7 @@
         {
             throw new System.NotImplementedException();
         }
-
-        public override Character TargetCharacterAndAttack()
-        {
+        
             //Bloody boi heals himself for 50% of damage dealt to target
-            throw new System.NotImplementedException();
-        }
     }
 }

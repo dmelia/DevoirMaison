@@ -1,6 +1,7 @@
 ﻿using System;
+using DevoirMaison.Combat;
 
-namespace DevoirMaison
+namespace DevoirMaison.Characters
 {
     //Slappy boi
     public class Berserker : Character
@@ -19,7 +20,7 @@ namespace DevoirMaison
             CurrentLife = 400;
             Attack = BaseAttack;
             PowerSpeed = BasePowerSpeed;
-            DamageType = DamageType.Normal;
+            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
         }
@@ -38,11 +39,6 @@ namespace DevoirMaison
             }
         }
 
-        public override bool ReceiveDamage(Damage damage)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override int RollAttack()
         {
             throw new System.NotImplementedException();
@@ -51,11 +47,6 @@ namespace DevoirMaison
         public override int RollSpeed()
         {
             throw new System.NotImplementedException();
-        }
-
-        public override Character TargetCharacterAndAttack()
-        {
-            throw new NotImplementedException();
         }
     }
 }
