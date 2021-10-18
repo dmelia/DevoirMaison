@@ -39,14 +39,9 @@ namespace DevoirMaison.Characters
             }
         }
 
-        public override int RollAttack()
+        public override void TargetCharacterAndAttack()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override int RollSpeed()
-        {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

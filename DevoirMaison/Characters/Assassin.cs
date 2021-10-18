@@ -26,17 +26,11 @@ namespace DevoirMaison.Characters
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttack()
+        public override void TargetCharacterAndAttack()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override int RollSpeed()
-        {
-            throw new System.NotImplementedException();
-        }
-        
             //Passive : attacks by the Dodgy boi deal 100% normal damage and 10% poison damage
             //If the Dodgy boi deals more than half of the targets life in damage, a critical hit is inflicted, killing the enemy
+            throw new System.NotImplementedException();
         }
+    }
 }

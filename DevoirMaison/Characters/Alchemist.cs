@@ -3,7 +3,7 @@
 namespace DevoirMaison.Characters
 {
     //Potion-y boi
-    public class Alchemist: Character
+    public class Alchemist : Character
     {
         public Alchemist(string name, BattleGround battleGround)
         {
@@ -27,20 +27,24 @@ namespace DevoirMaison.Characters
             throw new System.NotImplementedException();
         }
 
+        public override void TargetCharacterAndAttack()
+        {
+            //All characters have 50% chance to be targeted by the Alchemist's attack
+            //All characters are considered as secondary targets (can hit even hidden characters)
+            //100% of damage dealt as poison and 50% of damage dealt as normal
+            throw new System.NotImplementedException();
+        }
+
         public override int RollAttack()
         {
             //rolls are 1 - 200
             throw new System.NotImplementedException();
         }
 
-        public override int RollSpeed()
+        public override int RollAttackSpeed()
         {
             //rolls are 1 - 200
             throw new System.NotImplementedException();
         }
-        
-            //All characters have 50% chance to be targeted by the Alchemist's attack
-            //All characters are considered as secondary targets (can hit even hidden characters)
-            //100% of damage dealt as poison and 50% of damage dealt as normal
     }
 }

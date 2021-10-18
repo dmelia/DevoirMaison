@@ -2,6 +2,8 @@
 {
     public enum CharacterType
     {
-        Undead, Human, Machine
+        Undead,
+        Human,
+        Machine
     }
 }

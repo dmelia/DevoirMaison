@@ -54,9 +54,14 @@ namespace DevoirMaison.Combat
             return Characters.Any(character => character.IsDead);
         }
 
+        //Returns a random consumable corpse
         public Character FindEdibleCorpse()
         {
-            return Characters.OrderByDescending(character => character.MaximumLife).First(character => !character.IsCorpseConsumed);
+            var random = new Random(DateTime.Now.Millisecond);
+            List<Character> deadCharacters = Characters.FindAll(character => character.IsDead);
+            int count = deadCharacters.Count;
+            int rand = random.Next(count);
+            return deadCharacters[rand];
         }
 
         public List<Character> FindTargetableCharacters()

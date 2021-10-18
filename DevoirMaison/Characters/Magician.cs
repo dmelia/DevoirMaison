@@ -32,12 +32,7 @@ namespace DevoirMaison.Characters
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttack()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int RollSpeed()
+        public override void TargetCharacterAndAttack()
         {
             throw new System.NotImplementedException();
         }

@@ -2,6 +2,8 @@
 {
     public enum CharacterStatus
     {
-        Poisoned, Normal, Hidden
+        Poisoned,
+        Normal,
+        Hidden
     }
 }

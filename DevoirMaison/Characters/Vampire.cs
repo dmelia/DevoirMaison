@@ -26,19 +26,12 @@ namespace DevoirMaison.Characters
             throw new System.NotImplementedException();
         }
 
-  
-            //Double damage from Sacred
-
-            public override int RollAttack()
+        public override void TargetCharacterAndAttack()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override int RollSpeed()
-        {
-            throw new System.NotImplementedException();
-        }
-        
             //Bloody boi heals himself for 50% of damage dealt to target
+            throw new System.NotImplementedException();
+        }
+        //Double damage from Sacred
+        
     }
 }

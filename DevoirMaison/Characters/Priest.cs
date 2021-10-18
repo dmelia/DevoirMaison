@@ -27,18 +27,14 @@ namespace DevoirMaison.Characters
             throw new System.NotImplementedException();
         }
 
-        public override int RollAttack()
+        public override void TargetCharacterAndAttack()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override int RollSpeed()
-        {
-            throw new System.NotImplementedException();
-        }
-
-
             //Targets undead in priority
             //Deals sacred damage
+            throw new System.NotImplementedException();
+        }
+
+
+        
     }
 }

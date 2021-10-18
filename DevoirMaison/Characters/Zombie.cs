@@ -27,25 +27,17 @@ namespace DevoirMaison.Characters
             Character target = battleGround.FindEdibleCorpse();
             //consumes a random dead player, gain hp equal to the dead players max life
             GainLife(target.MaximumLife);
-            CorpseEventArgs args = new CorpseEventArgs();
-            args.Target = target;
-            
+            target.IsCorpseConsumed = true;
         }
 
-        
-            //Immune to poison
-            //Defense roll always equal to 0
-            //Double damage from Sacred
-
-            public override int RollAttack()
+        public override void TargetCharacterAndAttack()
         {
-            //Bitey boi's attack delay roll is always 0
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public override int RollSpeed()
-        {
-            throw new System.NotImplementedException();
-        }
+        //Immune to poison
+        //Defense roll always equal to 0
+        //Double damage from Sacred
+        //Bitey boi's attack delay roll when hit is always 0
     }
 }

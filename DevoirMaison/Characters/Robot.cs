@@ -28,20 +28,24 @@ namespace DevoirMaison.Characters
             Attack = (int) (Attack + Math.Ceiling(Attack * 0.5));
         }
 
-      
-            //Immune to poison
+        public override void TargetCharacterAndAttack()
+        {
+            throw new NotImplementedException();
+        }
+
+        //Immune to poison
       
 
         public override int RollAttack()
         {
             //Rolls just add 50 to stat
-            throw new System.NotImplementedException();
+            return Attack + 50;
         }
 
-        public override int RollSpeed()
+        public override int RollAttackSpeed()
         {
             //Rolls just add 50 to stat
-            throw new System.NotImplementedException();
+            return (int) (Math.Ceiling(1000 / AttackSpeed) - 50);
         }
     }
 }

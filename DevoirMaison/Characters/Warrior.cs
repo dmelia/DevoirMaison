@@ -1,20 +1,23 @@
-﻿using DevoirMaison.Combat;
+﻿using System;
+using DevoirMaison.Combat;
 
 namespace DevoirMaison.Characters
 {
     //Hitty boi
     public class Warrior: Character
     {
+        private readonly double BaseAttackSpeed = 2.2;
+        private DateTime PreviousBuffTime;
         public Warrior(string name, BattleGround battleGround)
         { 
             Name = name;
-            Defense = 0;
-            AttackSpeed = 1;
-            Damages = 20;
-            MaximumLife = 1500;
-            CurrentLife = 1500;
+            Defense = 105;
+            AttackSpeed = BaseAttackSpeed;
+            Damages = 150;
+            MaximumLife = 250;
+            CurrentLife = 250;
             Attack = 150;
-            PowerSpeed = 0.1;
+            PowerSpeed = 0.2;
             BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
@@ -22,15 +25,16 @@ namespace DevoirMaison.Characters
 
         public override void SpecialPower()
         {
-            throw new System.NotImplementedException();
+            if (TimeDifferenceFromNow(PreviousBuffTime) < 3000)
+            {
+                Console.Write("We purposely trained {0} wrong, as a joke !", Name);
+                Console.Write("{0} Attacks faster !");
+                AttackSpeed = BaseAttackSpeed + 0.5;
+                PreviousBuffTime = DateTime.Now;
+            }
         }
 
-        public override int RollAttack()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int RollSpeed()
+        public override void TargetCharacterAndAttack()
         {
             throw new System.NotImplementedException();
         }

@@ -35,7 +35,12 @@ namespace DevoirMaison.Characters
             //Effectively, making a double with 1 current HP is enough
             throw new System.NotImplementedException();
         }
-        
+
+        public override void TargetCharacterAndAttack()
+        {
+            throw new System.NotImplementedException();
+        }
+
         // If double is hit, it instantly dies, leaving no corpse
 
         public override int RollAttack()

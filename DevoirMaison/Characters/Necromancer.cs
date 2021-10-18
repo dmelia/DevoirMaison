@@ -2,7 +2,7 @@
 
 namespace DevoirMaison.Characters
 {
-    public class Necromancer : Character 
+    public class Necromancer : Character
     {
         //Bony boi
         public Necromancer(string name, BattleGround battleGround)
@@ -28,19 +28,22 @@ namespace DevoirMaison.Characters
             throw new System.NotImplementedException();
         }
 
+        public override void TargetCharacterAndAttack()
+        {
+            //Deals 50% normal damage, 50% poison damage
+            throw new System.NotImplementedException();
+        }
+
         public override int RollAttack()
         {
             //rolls are 1-150
             throw new System.NotImplementedException();
         }
 
-        public override int RollSpeed()
+        public override int RollAttackSpeed()
         {
             //rolls are 1-150
             throw new System.NotImplementedException();
         }
-
-        //Deals 50% normal damage, 50% poison damage
-
     }
 }
