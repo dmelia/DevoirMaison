@@ -16,9 +16,9 @@ namespace DevoirMaison.Characters
             CurrentLife = 1500;
             Attack = 150;
             PowerSpeed = 0.1;
-            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Undead;
             base.battleGround = battleGround;
+            HeroDamage.NormalDamagePercentage = 1;
         }
 
         public override void SpecialPower()
@@ -35,9 +35,15 @@ namespace DevoirMaison.Characters
             throw new NotImplementedException();
         }
 
-        //Immune to poison
+        
         //Defense roll always equal to 0
         //Double damage from Sacred
+        //Immune to poison
         //Bitey boi's attack delay roll when hit is always 0
+        public override void TakeAttackDamage(int amount, HeroDamage heroDamage)
+        {
+            int damageTaken = (int) Math.Ceiling((double) ((amount) * (Damages / 100)));
+            TakeDamage(damageTaken);
+        }
     }
 }

@@ -13,8 +13,6 @@ namespace DevoirMaison.Characters
         public BattleGround battleGround { get; set; }
         public string Name { get; set; }
 
-        public DamageType BaseDamageType { get; set; }
-
         public int Attack { get; set; }
 
         public int Defense { get; set; }
@@ -29,23 +27,19 @@ namespace DevoirMaison.Characters
 
         public double PowerSpeed { get; set; }
 
-        public DateTime LastAttackDate { get; set; }
-
-        public DateTime LastPowerDate { get; set; }
-
         public int AttackCooldown { get; set; }
-
-        public DateTime LastPoisonHitDate { get; set; }
 
         public int PoisonCounter { get; set; }
 
         public CharacterType CharacterType { get; set; }
+        
+        public HeroDamage HeroDamage { get; set; }
 
         public bool IsDead { get; set; } = false;
 
         public bool IsCorpseConsumed { get; set; } = false;
 
-        public bool IsDouble { get; set; } = false;
+        public bool IsClone { get; set; } = false;
 
         public CharacterStatus CharacterStatus { get; set; } = CharacterStatus.Normal;
 
@@ -68,7 +62,7 @@ namespace DevoirMaison.Characters
             return (int) (Math.Ceiling(1000 / AttackSpeed) - DiceService.RollDice(1, 100));
         }
 
-        public virtual int GetPowerDelay()
+        public int GetPowerDelay()
         {
             return (int) Math.Ceiling(1000 / PowerSpeed);
         }
@@ -91,16 +85,21 @@ namespace DevoirMaison.Characters
             }
         }
 
-        public void TakeAttackDamage(int amount)
+        public virtual void TakeAttackDamage(int amount, HeroDamage heroDamage)
         {
             int defenseRoll = RollDefense();
             if (defenseRoll < amount)
             {
-                var attackCooldown = AttackCooldown;
-                Interlocked.Add(ref attackCooldown, amount);
                 int damageTaken = (int) Math.Ceiling((double) ((amount - defenseRoll) * (Damages / 100)));
+                AddAttackCooldown(damageTaken);
                 TakeDamage(damageTaken);
             }
+        }
+
+        public void AddAttackCooldown(int amount)
+        {
+            var attackCooldown = AttackCooldown;
+            Interlocked.Add(ref attackCooldown, amount);
         }
 
 

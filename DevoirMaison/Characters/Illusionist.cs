@@ -5,6 +5,7 @@ namespace DevoirMaison.Characters
     //Clony boi
     public class Illusionist : Character
     {
+        private int BaseAttack = 75;
         public Illusionist(string name, BattleGround battleGround)
         {
             Name = name;
@@ -13,27 +14,20 @@ namespace DevoirMaison.Characters
             Damages = 50;
             MaximumLife = 100;
             CurrentLife = 100;
-            Attack = 75;
+            Attack = BaseAttack;
             PowerSpeed = 0.5;
-            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
-        }
-
-        private Illusionist CreateDouble()
-        {
-            Illusionist _double = new Illusionist("Double", battleGround);
-            _double.IsDouble = true;
-            return _double;
+            HeroDamage.NormalDamagePercentage = 1;
         }
 
         public override void SpecialPower()
         {
             //Creates a double of himself
             //Doubles can cumulate
-            //If hit and takes damage, double is destroyed
-            //Effectively, making a double with 1 current HP is enough
-            throw new System.NotImplementedException();
+            Illusionist _double = new Illusionist("Double", battleGround);
+            _double.IsClone = true;
+            battleGround.Characters.Add(_double);
         }
 
         public override void TargetCharacterAndAttack()
@@ -41,12 +35,32 @@ namespace DevoirMaison.Characters
             throw new System.NotImplementedException();
         }
 
-        // If double is hit, it instantly dies, leaving no corpse
+        public override void TakeAttackDamage(int amount, HeroDamage heroDamage)
+        {
+            if (IsClone)
+            {
+                //If hit and takes damage, double is destroyed
+                int defenseRoll = RollDefense();
+                if (defenseRoll < amount)
+                {
+                    IsDead = true;
+                    //Doubles leave no exploitable corpses
+                    IsCorpseConsumed = true;
+                }
+            }
+            base.TakeAttackDamage(amount, heroDamage);
+        }
 
         public override int RollAttack()
         {
             //For each double in combat (that's alive), gain 10 Attack
-            throw new System.NotImplementedException();
+            int doublesCount = battleGround.CountDoubles();
+            if (!IsClone) //Doubles don't get the bonus damage (that would be stupid)
+            {
+                Attack = BaseAttack + (doublesCount * 10);
+            }
+
+            return base.RollAttack();
         }
     }
 }

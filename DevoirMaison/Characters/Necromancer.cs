@@ -15,9 +15,11 @@ namespace DevoirMaison.Characters
             MaximumLife = 275;
             CurrentLife = 275;
             PowerSpeed = 5;
-            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Undead;
             base.battleGround = battleGround;
+            //Deals 50% normal damage, 50% poison damage
+            HeroDamage.NormalDamagePercentage = 0.5;
+            HeroDamage.PoisonDamagePercentage = 0.5;
         }
 
         public override void SpecialPower()
@@ -30,7 +32,6 @@ namespace DevoirMaison.Characters
 
         public override void TargetCharacterAndAttack()
         {
-            //Deals 50% normal damage, 50% poison damage
             throw new System.NotImplementedException();
         }
 

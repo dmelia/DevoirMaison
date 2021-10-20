@@ -9,11 +9,7 @@ namespace DevoirMaison.Combat
     {
         //If set to false, battle has not started and players cannot use skills or attacks
         public bool BattleStarted { get; set; } = false;
-        public List<Character> Characters
-        {
-            get;
-            set;
-        }
+        public List<Character> Characters { get; set; }
 
         public BattleGround()
         {
@@ -64,9 +60,74 @@ namespace DevoirMaison.Combat
             return deadCharacters[rand];
         }
 
-        public List<Character> FindTargetableCharacters()
+        //Returns the current character with the highest life value on the battle field
+        public Character FindHighestHealthCharacter()
         {
-            return Characters.FindAll(character => !character.IsDead);
+            return Characters.OrderByDescending(character => character.CurrentLife).First(character => !character.IsDead);
+        }
+
+        //Finds all living characters except the character that invoked the call
+        public List<Character> FindLivingCharacters(Character self)
+        {
+            return Characters.FindAll(character => !character.IsDead && character != self);
+        }
+
+        //Returns a random character that can be targeted, except self
+        public Character FindFirstTarget(bool canTargetHidden, Character self)
+        {
+            List<Character> potentialTargets;
+            if (!canTargetHidden)
+            {
+                potentialTargets = Characters.FindAll(character =>
+                    !character.IsDead && character.CharacterStatus != CharacterStatus.Hidden && character != self);
+            }
+            else
+            {
+                potentialTargets = Characters.FindAll(character => !character.IsDead && character != self);
+            }
+
+            var random = new Random(DateTime.Now.Millisecond);
+            int count = potentialTargets.Count;
+            int rand = random.Next(count);
+            return potentialTargets[rand];
+        }
+
+        //Returns random characters that can be targeted
+        public List<Character> FindTargets(bool canTargetHidden, int amount)
+        {
+            List<Character> potentialTargets;
+            List<Character> targets = new List<Character>();
+            if (!canTargetHidden)
+            {
+                potentialTargets = Characters.FindAll(character =>
+                    !character.IsDead && character.CharacterStatus != CharacterStatus.Hidden);
+            }
+            else
+            {
+                potentialTargets = Characters.FindAll(character => !character.IsDead);
+            }
+
+            var random = new Random(DateTime.Now.Millisecond);
+
+            if (potentialTargets.Count < amount)
+            {
+                amount = potentialTargets.Count;
+            }
+
+            for (int i = 1; i < amount; i++)
+            {
+                int count = potentialTargets.Count;
+                int rand = random.Next(count);
+                targets.Add(potentialTargets[rand]);
+                potentialTargets.RemoveAt(rand);
+            }
+
+            return targets;
+        }
+
+        public int CountDoubles()
+        {
+            return Characters.FindAll(character => character.IsClone && !character.IsDead).Count;
         }
     }
 }

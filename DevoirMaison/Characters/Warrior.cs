@@ -18,9 +18,9 @@ namespace DevoirMaison.Characters
             CurrentLife = 250;
             Attack = 150;
             PowerSpeed = 0.2;
-            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
+            HeroDamage.NormalDamagePercentage = 1;
         }
 
         public override void SpecialPower()

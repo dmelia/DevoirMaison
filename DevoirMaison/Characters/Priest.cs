@@ -15,10 +15,10 @@ namespace DevoirMaison.Characters
             MaximumLife = 150;
             CurrentLife = 150;
             PowerSpeed = 1.0;
-            BaseDamageType = DamageType.Sacred;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
-            
+            //Deals sacred damage
+            HeroDamage.SacredDamagePercentage = 1;
         }
 
         public override void SpecialPower()
@@ -30,7 +30,7 @@ namespace DevoirMaison.Characters
         public override void TargetCharacterAndAttack()
         {
             //Targets undead in priority
-            //Deals sacred damage
+            
             throw new System.NotImplementedException();
         }
 

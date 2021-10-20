@@ -15,9 +15,9 @@ namespace DevoirMaison.Characters
             MaximumLife = 150;
             CurrentLife = 150;
             PowerSpeed = 0.2;
-            BaseDamageType = DamageType.Normal;
             CharacterType = CharacterType.Undead;
             base.battleGround = battleGround;
+            HeroDamage.NormalDamagePercentage = 1;
         }
 
         public override void SpecialPower()
