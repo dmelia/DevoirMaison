@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using DevoirMaison.Combat;
+using Timer = System.Timers.Timer;
 
 namespace DevoirMaison.Characters
 {
@@ -32,8 +35,6 @@ namespace DevoirMaison.Characters
 
         public int AttackCooldown { get; set; }
 
-        public int PowerCooldown { get; set; }
-
         public DateTime LastPoisonHitDate { get; set; }
 
         public int PoisonCounter { get; set; }
@@ -55,6 +56,11 @@ namespace DevoirMaison.Characters
         public virtual int RollAttack()
         {
             return Attack + DiceService.RollDice(1, 100);
+        }
+
+        public virtual int RollDefense()
+        {
+            return Defense + DiceService.RollDice(1, 100);
         }
 
         public virtual int RollAttackSpeed()
@@ -85,6 +91,18 @@ namespace DevoirMaison.Characters
             }
         }
 
+        public void TakeAttackDamage(int amount)
+        {
+            int defenseRoll = RollDefense();
+            if (defenseRoll < amount)
+            {
+                var attackCooldown = AttackCooldown;
+                Interlocked.Add(ref attackCooldown, amount);
+                int damageTaken = (int) Math.Ceiling((double) ((amount - defenseRoll) * (Damages / 100)));
+                TakeDamage(damageTaken);
+            }
+        }
+
 
         private Timer _timer;
 
@@ -103,44 +121,40 @@ namespace DevoirMaison.Characters
             _timer.Elapsed += PoisonedElapsedHandler;
         }
 
-        public void AttackElapsedHandler(object source, ElapsedEventArgs args)
+        public async void AttackElapsedHandler(object source, ElapsedEventArgs args)
         {
-            if (TimeDifferenceFromNow(LastAttackDate) < AttackCooldown && battleGround.BattleStarted)
+            await Task.Run(() =>
             {
-                LastAttackDate = DateTime.Now;
+                Task.Delay(AttackCooldown);
                 //Attack
                 TargetCharacterAndAttack();
 
                 //Roll attack delay
                 AttackCooldown = RollAttackSpeed();
-            }
+            });
         }
 
-        public void PowerElapsedHandler(object source, ElapsedEventArgs args)
+        public async void PowerElapsedHandler(object source, ElapsedEventArgs args)
         {
-            if (TimeDifferenceFromNow(LastPowerDate) < PowerCooldown && battleGround.BattleStarted)
+            //Use power
+            await Task.Run(() =>
             {
-                //Set latest power use date
-                LastPowerDate = DateTime.Now;
-
-                //Use power
+                Task.Delay(GetPowerDelay());
                 SpecialPower();
-
-                //Set power delay in milliseconds
-                PowerCooldown = GetPowerDelay();
-            }
+            });
         }
 
-        public void PoisonedElapsedHandler(object source, ElapsedEventArgs args)
+        public async void PoisonedElapsedHandler(object source, ElapsedEventArgs args)
         {
-            if (CharacterStatus == CharacterStatus.Poisoned && battleGround.BattleStarted)
+            //Take Poison Damage if poisoned
+            await Task.Run(() =>
             {
-                if (TimeDifferenceFromNow(LastPoisonHitDate) < _poisonCooldown)
+                if (CharacterStatus == CharacterStatus.Poisoned)
                 {
+                    Task.Delay(_poisonCooldown);
                     TakeDamage(PoisonCounter);
-                    LastPoisonHitDate = DateTime.Now;
                 }
-            }
+            });
         }
 
         public static int TimeDifferenceFromNow(DateTime start)
