@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DevoirMaison.Combat;
 
 namespace DevoirMaison.Characters
@@ -42,6 +41,7 @@ namespace DevoirMaison.Characters
             {
                 CurrentLife = MaximumLife;
             }
+            Console.WriteLine("Potion-y boi exchanged his life !");
         }
 
         public override void TargetCharacterAndAttack()
@@ -55,6 +55,8 @@ namespace DevoirMaison.Characters
                 if (DiceService.RollDice(0,1) == 1)
                 {
                     //Attack character (50% chance)
+                    int attackValue = RollAttack();
+                    
                 }
             }
         }

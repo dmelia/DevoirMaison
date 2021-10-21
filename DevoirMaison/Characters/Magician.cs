@@ -31,10 +31,5 @@ namespace DevoirMaison.Characters
             //Initial damage is attack damage multiplied by 5
             throw new System.NotImplementedException();
         }
-
-        public override void TargetCharacterAndAttack()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DevoirMaison.Combat;
+﻿using System;
+using DevoirMaison.Combat;
 
 namespace DevoirMaison.Characters
 {
@@ -18,12 +19,17 @@ namespace DevoirMaison.Characters
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
             HeroDamage.NormalDamagePercentage = 1;
+            HeroDamage.PoisonDamagePercentage = 0.1;
         }
 
         public override void SpecialPower()
         {
-            CharacterStatus = CharacterStatus.Hidden;
-            throw new System.NotImplementedException();
+            if (CharacterStatus != CharacterStatus.Poisoned)
+            {
+                //Cannot become hidden if poisoned
+                Console.WriteLine("Dodgy boi becomes hidden !");
+                CharacterStatus = CharacterStatus.Hidden;
+            }
         }
 
         public override void TargetCharacterAndAttack()

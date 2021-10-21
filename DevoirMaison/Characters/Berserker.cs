@@ -38,10 +38,5 @@ namespace DevoirMaison.Characters
                 Attack = BaseAttack + valueAdded;
             }
         }
-
-        public override void TargetCharacterAndAttack()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

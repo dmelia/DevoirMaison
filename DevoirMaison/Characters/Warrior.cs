@@ -4,12 +4,12 @@ using DevoirMaison.Combat;
 namespace DevoirMaison.Characters
 {
     //Hitty boi
-    public class Warrior: Character
+    public class Warrior : Character
     {
         private readonly double BaseAttackSpeed = 2.2;
-        private DateTime PreviousBuffTime;
+
         public Warrior(string name, BattleGround battleGround)
-        { 
+        {
             Name = name;
             Defense = 105;
             AttackSpeed = BaseAttackSpeed;
@@ -25,18 +25,10 @@ namespace DevoirMaison.Characters
 
         public override void SpecialPower()
         {
-            if (TimeDifferenceFromNow(PreviousBuffTime) < 3000)
-            {
-                Console.Write("We purposely trained {0} wrong, as a joke !", Name);
-                Console.Write("{0} Attacks faster !");
-                AttackSpeed = BaseAttackSpeed + 0.5;
-                PreviousBuffTime = DateTime.Now;
-            }
-        }
-
-        public override void TargetCharacterAndAttack()
-        {
-            throw new System.NotImplementedException();
+            //Todo remove buff after 3 seconds
+            Console.Write("We purposely trained {0} wrong, as a joke !", Name);
+            Console.Write("{0} Attacks faster !");
+            AttackSpeed = BaseAttackSpeed + 0.5;
         }
     }
 }

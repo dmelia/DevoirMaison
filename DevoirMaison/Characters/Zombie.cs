@@ -16,34 +16,36 @@ namespace DevoirMaison.Characters
             CurrentLife = 1500;
             Attack = 150;
             PowerSpeed = 0.1;
+            //Double damage from Sacred
             CharacterType = CharacterType.Undead;
             base.battleGround = battleGround;
             HeroDamage.NormalDamagePercentage = 1;
+            //Immune to poison
+            IsImmuneToPoison = true;
         }
 
         public override void SpecialPower()
         {
-            Console.WriteLine("Bitey Boi eats a fresh cadaver");
             Character target = battleGround.FindEdibleCorpse();
-            //consumes a random dead player, gain hp equal to the dead players max life
-            GainLife(target.MaximumLife);
-            target.IsCorpseConsumed = true;
+            if (target != null)
+            {
+                Console.WriteLine("Bitey Boi eats a fresh cadaver");
+                //consumes a random dead player, gain hp equal to the dead players max life
+                GainLife(target.MaximumLife);
+                target.IsCorpseConsumed = true;
+            }
         }
-
-        public override void TargetCharacterAndAttack()
-        {
-            throw new NotImplementedException();
-        }
-
         
-        //Defense roll always equal to 0
-        //Double damage from Sacred
-        //Immune to poison
         //Bitey boi's attack delay roll when hit is always 0
-        public override void TakeAttackDamage(int amount, HeroDamage heroDamage)
+        public override void AddAttackCooldown(int amount)
         {
-            int damageTaken = (int) Math.Ceiling((double) ((amount) * (Damages / 100)));
-            TakeDamage(damageTaken);
+            //Do nothing
+        }
+
+        public override int RollDefense()
+        {
+            //Defense roll always equal to 0
+            return 0;
         }
     }
 }

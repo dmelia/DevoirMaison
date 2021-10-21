@@ -32,7 +32,7 @@ namespace DevoirMaison.Characters
         public int PoisonCounter { get; set; }
 
         public CharacterType CharacterType { get; set; }
-        
+
         public HeroDamage HeroDamage { get; set; }
 
         public bool IsDead { get; set; } = false;
@@ -41,11 +41,16 @@ namespace DevoirMaison.Characters
 
         public bool IsClone { get; set; } = false;
 
+        public bool IsImmuneToPoison { get; set; } = false;
+
         public CharacterStatus CharacterStatus { get; set; } = CharacterStatus.Normal;
 
         public abstract void SpecialPower();
 
-        public abstract void TargetCharacterAndAttack();
+        public virtual void TargetCharacterAndAttack()
+        {
+            //todo
+        }
 
         public virtual int RollAttack()
         {
@@ -76,7 +81,7 @@ namespace DevoirMaison.Characters
             }
         }
 
-        public void TakeDamage(int amount)
+        public virtual void TakeDamage(int amount)
         {
             CurrentLife -= amount;
             if (CurrentLife <= 0)
@@ -85,18 +90,61 @@ namespace DevoirMaison.Characters
             }
         }
 
-        public virtual void TakeAttackDamage(int amount, HeroDamage heroDamage)
+        //Returns true if 50% or more of this characters HP was lost from attack (for Assassin critical hit)
+        public virtual bool TakeAttackDamage(int amount, HeroDamage heroDamage)
         {
             int defenseRoll = RollDefense();
+            if (IsClone)
+            {
+                //If hit and takes damage, double is destroyed
+                if (defenseRoll < amount)
+                {
+                    IsDead = true;
+                    //Doubles leave no exploitable corpses
+                    IsCorpseConsumed = true;
+                }
+            }
+            
             if (defenseRoll < amount)
             {
                 int damageTaken = (int) Math.Ceiling((double) ((amount - defenseRoll) * (Damages / 100)));
-                AddAttackCooldown(damageTaken);
-                TakeDamage(damageTaken);
+                //Only take damage if it is a positive value, if defense roll was higher, no damage is taken
+                if (damageTaken > 0)
+                {
+                    int poisonAmount = (int) Math.Ceiling(damageTaken * heroDamage.PoisonDamagePercentage);
+                    int normalDamage = (int) Math.Ceiling(damageTaken * heroDamage.NormalDamagePercentage);
+                    int sacredDamage = (int) Math.Ceiling(damageTaken * heroDamage.SacredDamagePercentage);
+
+                    if (!IsImmuneToPoison)
+                    {
+                        //Take poison damage
+                        PoisonCounter += poisonAmount;
+                        CharacterStatus = CharacterStatus.Poisoned;
+                    }
+
+                    //Take normal damage
+                    TakeDamage(normalDamage);
+                    if (CharacterType == CharacterType.Undead)
+                    {
+                        //Multiply sacred damage by 2 if character is undead
+                        sacredDamage = sacredDamage * 2;
+                    }
+
+                    //Take sacred damage
+                    TakeDamage(sacredDamage);
+
+                    //Apply attack cooldown
+                    AddAttackCooldown(sacredDamage + poisonAmount + normalDamage);
+                    
+                    //Returns true if critical hit
+                    return normalDamage >= CurrentLife / 2;
+                }
             }
+            //Return false by default
+            return false;
         }
 
-        public void AddAttackCooldown(int amount)
+        public virtual void AddAttackCooldown(int amount)
         {
             var attackCooldown = AttackCooldown;
             Interlocked.Add(ref attackCooldown, amount);

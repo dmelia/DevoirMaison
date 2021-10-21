@@ -20,6 +20,8 @@ namespace DevoirMaison.Characters
             CharacterType = CharacterType.Machine;
             base.battleGround = battleGround;
             HeroDamage.NormalDamagePercentage = 1;
+            //Immune to poison
+            IsImmuneToPoison = true;
         }
 
         public override void SpecialPower()
@@ -28,18 +30,19 @@ namespace DevoirMaison.Characters
             Attack = (int) (Attack + Math.Ceiling(Attack * 0.5));
         }
 
-        public override void TargetCharacterAndAttack()
-        {
-            throw new NotImplementedException();
-        }
-
-        //Immune to poison
+        
       
 
         public override int RollAttack()
         {
             //Rolls just add 50 to stat
             return Attack + 50;
+        }
+
+        public override int RollDefense()
+        {
+            //Rolls just add 50 to stat
+            return Defense + 50;
         }
 
         public override int RollAttackSpeed()

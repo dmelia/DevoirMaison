@@ -1,4 +1,5 @@
-﻿using DevoirMaison.Combat;
+﻿using System.Threading;
+using DevoirMaison.Combat;
 
 namespace DevoirMaison.Characters
 {
@@ -24,12 +25,8 @@ namespace DevoirMaison.Characters
         public override void SpecialPower()
         {
             //Reduces delay to 0 of next hit
-            throw new System.NotImplementedException();
-        }
-
-        public override void TargetCharacterAndAttack()
-        {
-            throw new System.NotImplementedException();
+            var attackCooldown = AttackCooldown;
+            Interlocked.Add(ref attackCooldown, -AttackCooldown);
         }
     }
 }

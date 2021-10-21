@@ -1,4 +1,5 @@
-﻿using DevoirMaison.Combat;
+﻿using System;
+using DevoirMaison.Combat;
 
 namespace DevoirMaison.Characters
 {
@@ -28,27 +29,7 @@ namespace DevoirMaison.Characters
             Illusionist _double = new Illusionist("Double", battleGround);
             _double.IsClone = true;
             battleGround.Characters.Add(_double);
-        }
-
-        public override void TargetCharacterAndAttack()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void TakeAttackDamage(int amount, HeroDamage heroDamage)
-        {
-            if (IsClone)
-            {
-                //If hit and takes damage, double is destroyed
-                int defenseRoll = RollDefense();
-                if (defenseRoll < amount)
-                {
-                    IsDead = true;
-                    //Doubles leave no exploitable corpses
-                    IsCorpseConsumed = true;
-                }
-            }
-            base.TakeAttackDamage(amount, heroDamage);
+            Console.WriteLine("Clony boi cloned himself !");
         }
 
         public override int RollAttack()

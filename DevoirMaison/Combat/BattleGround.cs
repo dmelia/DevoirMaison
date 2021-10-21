@@ -129,5 +129,10 @@ namespace DevoirMaison.Combat
         {
             return Characters.FindAll(character => character.IsClone && !character.IsDead).Count;
         }
+
+        public int CountDeadCharacters()
+        {
+            return Characters.FindAll(character => !character.IsClone && character.IsDead).Count;
+        }
     }
 }

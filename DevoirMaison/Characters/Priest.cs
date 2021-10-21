@@ -1,4 +1,5 @@
-﻿using DevoirMaison.Combat;
+﻿using System;
+using DevoirMaison.Combat;
 
 namespace DevoirMaison.Characters
 {
@@ -24,7 +25,7 @@ namespace DevoirMaison.Characters
         public override void SpecialPower()
         {
             //Lighty boi heals himself for 10% of his max life
-            throw new System.NotImplementedException();
+            GainLife((int) (Math.Ceiling(MaximumLife * 0.1)));
         }
 
         public override void TargetCharacterAndAttack()
@@ -33,8 +34,5 @@ namespace DevoirMaison.Characters
             
             throw new System.NotImplementedException();
         }
-
-
-        
     }
 }
