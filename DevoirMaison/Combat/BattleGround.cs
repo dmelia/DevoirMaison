@@ -45,9 +45,14 @@ namespace DevoirMaison.Combat
             BattleStarted = true;
         }
 
-        public bool ArePlayersAlive()
+        public bool AreAllPlayersAlive()
         {
             return Characters.Any(character => character.IsDead);
+        }
+        
+        public bool ArePlayersAlive()
+        {
+            return Characters.Any(character => !character.IsDead);
         }
 
         //Returns a random consumable corpse
@@ -63,7 +68,8 @@ namespace DevoirMaison.Combat
         //Returns the current character with the highest life value on the battle field
         public Character FindHighestHealthCharacter()
         {
-            return Characters.OrderByDescending(character => character.CurrentLife).First(character => !character.IsDead);
+            return Characters.OrderByDescending(character => character.CurrentLife)
+                .First(character => !character.IsDead);
         }
 
         //Finds all living characters except the character that invoked the call
@@ -73,7 +79,7 @@ namespace DevoirMaison.Combat
         }
 
         //Returns a random character that can be targeted, except self
-        public Character FindFirstTarget(bool canTargetHidden, Character self)
+        public Character FindFirstTarget(bool canTargetHidden, Character self, bool prioritiseUndead)
         {
             List<Character> potentialTargets;
             if (!canTargetHidden)
@@ -85,7 +91,10 @@ namespace DevoirMaison.Combat
             {
                 potentialTargets = Characters.FindAll(character => !character.IsDead && character != self);
             }
-
+            if (prioritiseUndead)
+            {
+                potentialTargets = potentialTargets.FindAll(character => character.CharacterType == CharacterType.Undead);
+            }
             var random = new Random(DateTime.Now.Millisecond);
             int count = potentialTargets.Count;
             int rand = random.Next(count);

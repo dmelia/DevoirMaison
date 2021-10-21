@@ -22,6 +22,7 @@ namespace DevoirMaison.Characters
 
         public override void SpecialPower()
         {
+            //Todo
             //Special is an attack
             //Targets multiple enemies
             //When it hits 1st enemy, damage is reduced by 10% (from total initial damage)
@@ -29,7 +30,7 @@ namespace DevoirMaison.Characters
             //continues hitting enemies and reducing damage by 10% until damage is 0 or that a player was able to defend.
             //If 1st target was able to defend, it does not chain
             //Initial damage is attack damage multiplied by 5
-            throw new System.NotImplementedException();
+            
         }
     }
 }

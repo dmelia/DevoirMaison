@@ -6,7 +6,7 @@ namespace DevoirMaison.Characters
     //Clony boi
     public class Illusionist : Character
     {
-        private int BaseAttack = 75;
+        private readonly int BaseAttack = 75;
         public Illusionist(string name, BattleGround battleGround)
         {
             Name = name;
@@ -26,10 +26,10 @@ namespace DevoirMaison.Characters
         {
             //Creates a double of himself
             //Doubles can cumulate
-            Illusionist _double = new Illusionist("Double", battleGround);
-            _double.IsClone = true;
-            battleGround.Characters.Add(_double);
-            Console.WriteLine("Clony boi cloned himself !");
+            //Illusionist _double = new Illusionist("Double", battleGround);
+            //_double.IsClone = true;
+            //battleGround.Characters.Add(_double);
+            //Console.WriteLine("Clony boi cloned himself !");
         }
 
         public override int RollAttack()

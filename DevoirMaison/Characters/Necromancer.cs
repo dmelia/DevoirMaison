@@ -6,9 +6,9 @@ namespace DevoirMaison.Characters
     //Bony boi
     public class Necromancer : Character
     {
-        private int BaseAttack = 0;
-        private int BaseDefense = 10;
-        private int BaseMaximumLife = 275;
+        private readonly int BaseAttack = 0;
+        private readonly int BaseDefense = 10;
+        private readonly int BaseMaximumLife = 275;
         
         public Necromancer(string name, BattleGround battleGround)
         {
@@ -32,7 +32,7 @@ namespace DevoirMaison.Characters
         {
             int deadCharacters = battleGround.CountDeadCharacters();
             //If no one is dead and character is not poisoned, gain camouflage
-            if (deadCharacters == 0 && CharacterStatus != CharacterStatus.Poisoned)
+            if (battleGround.AreAllPlayersAlive() && CharacterStatus != CharacterStatus.Poisoned)
             {
                 CharacterStatus = CharacterStatus.Hidden;
             }

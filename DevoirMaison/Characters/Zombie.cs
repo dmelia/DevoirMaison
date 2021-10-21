@@ -36,7 +36,7 @@ namespace DevoirMaison.Characters
             }
         }
         
-        //Bitey boi's attack delay roll when hit is always 0
+        //Bitey boi does not receive attack delay when hit
         public override void AddAttackCooldown(int amount)
         {
             //Do nothing

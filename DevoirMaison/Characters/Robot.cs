@@ -26,7 +26,7 @@ namespace DevoirMaison.Characters
 
         public override void SpecialPower()
         {
-            Console.WriteLine("Robot {0}, increased its attack by 50% !");
+            Console.WriteLine("Robot {0}, increased its attack by 50% !", Name);
             Attack = (int) (Attack + Math.Ceiling(Attack * 0.5));
         }
 

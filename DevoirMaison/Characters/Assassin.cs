@@ -18,6 +18,7 @@ namespace DevoirMaison.Characters
             PowerSpeed = 0.5;
             CharacterType = CharacterType.Human;
             base.battleGround = battleGround;
+            //Attacks by the dodgy boi deal 100% normal damage and 10% poison damage
             HeroDamage.NormalDamagePercentage = 1;
             HeroDamage.PoisonDamagePercentage = 0.1;
         }
@@ -30,13 +31,6 @@ namespace DevoirMaison.Characters
                 Console.WriteLine("Dodgy boi becomes hidden !");
                 CharacterStatus = CharacterStatus.Hidden;
             }
-        }
-
-        public override void TargetCharacterAndAttack()
-        {
-            //Passive : attacks by the Dodgy boi deal 100% normal damage and 10% poison damage
-            //If the Dodgy boi deals more than half of the targets life in damage, a critical hit is inflicted, killing the enemy
-            throw new System.NotImplementedException();
         }
     }
 }

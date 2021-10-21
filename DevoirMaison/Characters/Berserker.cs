@@ -6,9 +6,9 @@ namespace DevoirMaison.Characters
     //Slappy boi
     public class Berserker : Character
     {
-        private double BasePowerSpeed = 1;
-        private int BaseAttack = 50;
-        private int BaseDamages = 20;
+        private readonly double BasePowerSpeed = 1;
+        private readonly int BaseAttack = 50;
+        private readonly int BaseDamages = 20;
 
         public Berserker(string name, BattleGround battleGround)
         {

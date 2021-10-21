@@ -33,7 +33,7 @@ namespace DevoirMaison.Characters
 
         public CharacterType CharacterType { get; set; }
 
-        public HeroDamage HeroDamage { get; set; }
+        public HeroDamage HeroDamage { get; set; } = new();
 
         public bool IsDead { get; set; } = false;
 
@@ -49,7 +49,10 @@ namespace DevoirMaison.Characters
 
         public virtual void TargetCharacterAndAttack()
         {
-            //todo
+            Character target = battleGround.FindFirstTarget(false, this, false);
+            int attackValue = RollAttack();
+            int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
+            Console.WriteLine("{0} attacked {1}, dealt {2} damage", Name, target.Name, damageTaken);
         }
 
         public virtual int RollAttack()
@@ -81,19 +84,22 @@ namespace DevoirMaison.Characters
             }
         }
 
-        public virtual void TakeDamage(int amount)
+        public void TakeDamage(int amount)
         {
             CurrentLife -= amount;
             if (CurrentLife <= 0)
             {
+                Console.WriteLine("{0} died !", Name);
                 IsDead = true;
             }
         }
 
-        //Returns true if 50% or more of this characters HP was lost from attack (for Assassin critical hit)
-        public virtual bool TakeAttackDamage(int amount, HeroDamage heroDamage)
+        //Returns the amount of damage taken (after defense reduction)
+        public int TakeAttackDamage(int amount, HeroDamage heroDamage, bool canCritical)
         {
+            //todo : fix, currently characters never take damage
             int defenseRoll = RollDefense();
+            int damageTaken = (int) Math.Ceiling((double) ((amount - defenseRoll) * (Damages / 100)));
             if (IsClone)
             {
                 //If hit and takes damage, double is destroyed
@@ -102,12 +108,13 @@ namespace DevoirMaison.Characters
                     IsDead = true;
                     //Doubles leave no exploitable corpses
                     IsCorpseConsumed = true;
+                    //Defense was unsuccessful
+                    return damageTaken;
                 }
             }
-            
+
             if (defenseRoll < amount)
             {
-                int damageTaken = (int) Math.Ceiling((double) ((amount - defenseRoll) * (Damages / 100)));
                 //Only take damage if it is a positive value, if defense roll was higher, no damage is taken
                 if (damageTaken > 0)
                 {
@@ -135,13 +142,24 @@ namespace DevoirMaison.Characters
 
                     //Apply attack cooldown
                     AddAttackCooldown(sacredDamage + poisonAmount + normalDamage);
-                    
-                    //Returns true if critical hit
-                    return normalDamage >= CurrentLife / 2;
+
+                    //For Assassin criticals
+                    if (canCritical)
+                    {
+                        if (normalDamage >= CurrentLife / 2)
+                        {
+                            CurrentLife = 0;
+                            IsDead = true;
+                        }
+                    }
+
+                    //Defense was unsuccessful
+                    return damageTaken;
                 }
             }
-            //Return false by default
-            return false;
+
+            //Defense was successful
+            return 0;
         }
 
         public virtual void AddAttackCooldown(int amount)
@@ -153,12 +171,11 @@ namespace DevoirMaison.Characters
 
         private Timer _timer;
 
-        public void StartLife()
+        public virtual void StartLife()
         {
             Console.WriteLine("{0} is joining the fight ! The character is a {1} {2}", Name, CharacterType,
                 this.GetType().Name);
             _timer = new Timer();
-            _timer.AutoReset = false;
             _timer.Elapsed += (_, _) =>
             {
                 if (IsDead) _timer.Stop();
@@ -166,11 +183,12 @@ namespace DevoirMaison.Characters
             _timer.Elapsed += AttackElapsedHandler;
             _timer.Elapsed += PowerElapsedHandler;
             _timer.Elapsed += PoisonedElapsedHandler;
+            _timer.Enabled = true;
         }
 
-        public async void AttackElapsedHandler(object source, ElapsedEventArgs args)
+        public void AttackElapsedHandler(object source, ElapsedEventArgs args)
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
                 Task.Delay(AttackCooldown);
                 //Attack
@@ -181,20 +199,20 @@ namespace DevoirMaison.Characters
             });
         }
 
-        public async void PowerElapsedHandler(object source, ElapsedEventArgs args)
+        public void PowerElapsedHandler(object source, ElapsedEventArgs args)
         {
             //Use power
-            await Task.Run(() =>
+            Task.Run(() =>
             {
                 Task.Delay(GetPowerDelay());
                 SpecialPower();
             });
         }
 
-        public async void PoisonedElapsedHandler(object source, ElapsedEventArgs args)
+        public void PoisonedElapsedHandler(object source, ElapsedEventArgs args)
         {
             //Take Poison Damage if poisoned
-            await Task.Run(() =>
+            Task.Run(() =>
             {
                 if (CharacterStatus == CharacterStatus.Poisoned)
                 {
