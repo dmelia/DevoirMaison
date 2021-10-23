@@ -28,12 +28,12 @@ namespace DevoirMaison.Characters
         public override void SpecialPower()
         {
             Console.WriteLine("Slappy boi gets stronger!");
-            var lifePercentageLost = Math.Floor((CurrentLife - MaximumLife) * (double) MaximumLife / 10);
+            var lifePercentageLost = (CurrentLife - MaximumLife) * (double) MaximumLife / 10;
             PowerSpeed = BasePowerSpeed + 0.3 * (lifePercentageLost);
             int lifeLost = MaximumLife - CurrentLife;
             if (lifeLost > 0)
             {
-                int valueAdded = (int) Math.Ceiling((double) (lifeLost / 2));
+                int valueAdded = lifeLost / 2;
                 Damages = BaseDamages + valueAdded;
                 Attack = BaseAttack + valueAdded;
             }

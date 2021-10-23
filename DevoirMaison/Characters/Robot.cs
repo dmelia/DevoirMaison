@@ -26,8 +26,9 @@ namespace DevoirMaison.Characters
 
         public override void SpecialPower()
         {
-            Console.WriteLine("Robot {0}, increased its attack by 50% !", Name);
-            Attack = (int) (Attack + Math.Ceiling(Attack * 0.5));
+            Console.WriteLine("Boop Beep ! {0}, increased its attack by 50% !", Name);
+            Attack = (int) (Attack  * 1.5);
+            Console.WriteLine("Attack : {0}", Attack);
         }
 
         
@@ -48,7 +49,7 @@ namespace DevoirMaison.Characters
         public override int RollAttackSpeed()
         {
             //Rolls just add 50 to stat
-            return (int) (Math.Ceiling(1000 / AttackSpeed) - 50);
+            return (int) ((double) (1000 / AttackSpeed)- 50);
         }
     }
 }

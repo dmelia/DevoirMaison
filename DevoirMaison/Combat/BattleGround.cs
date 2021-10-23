@@ -50,16 +50,16 @@ namespace DevoirMaison.Combat
             return Characters.Any(character => character.IsDead);
         }
         
-        public bool ArePlayersAlive()
+        public bool ArePlayersFighting()
         {
-            return Characters.Any(character => !character.IsDead);
+            return Characters.Count(character => !character.IsDead) > 1;
         }
 
         //Returns a random consumable corpse
         public Character FindEdibleCorpse()
         {
             var random = new Random(DateTime.Now.Millisecond);
-            List<Character> deadCharacters = Characters.FindAll(character => character.IsDead);
+            List<Character> deadCharacters = Characters.FindAll(character => character.IsDead && !character.IsCorpseConsumed);
             int count = deadCharacters.Count;
             int rand = random.Next(count);
             return deadCharacters[rand];

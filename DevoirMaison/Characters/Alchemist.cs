@@ -71,7 +71,7 @@ namespace DevoirMaison.Characters
         public override int RollAttackSpeed()
         {
             //rolls are 1 - 200
-            return (int) (Math.Ceiling(1000 / AttackSpeed) - DiceService.RollDice(1, 200));
+            return (int) (double) (1000 / AttackSpeed) - DiceService.RollDice(1, 200);
         }
 
         public override int RollDefense()

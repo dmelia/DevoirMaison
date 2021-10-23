@@ -11,12 +11,13 @@ namespace DevoirMaison
             battleGround.PopulateBattleGround();
             battleGround.StartBattle();
 
-            while (battleGround.ArePlayersAlive())
+            while (battleGround.ArePlayersFighting())
             {
                 //Battle working here
             }
 
             Console.WriteLine("Battle ended");
+            Console.WriteLine("Winner was : {0}", battleGround.Characters.Find(character => !character.IsDead)?.Name);
             Console.Read();
         }
     }

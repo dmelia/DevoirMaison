@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using DevoirMaison.Combat;
 
 namespace DevoirMaison.Characters
@@ -27,6 +28,7 @@ namespace DevoirMaison.Characters
             //Reduces delay to 0 of next hit
             var attackCooldown = AttackCooldown;
             Interlocked.Add(ref attackCooldown, -AttackCooldown);
+            Console.WriteLine("{0}'s next attack is fast !", Name);
         }
     }
 }

@@ -25,7 +25,8 @@ namespace DevoirMaison.Characters
         public override void SpecialPower()
         {
             //Lighty boi heals himself for 10% of his max life
-            GainLife((int) (Math.Ceiling(MaximumLife * 0.1)));
+            GainLife((int) (MaximumLife * 0.1));
+            Console.WriteLine("{0} healed himself !", Name);
         }
 
         public override void TargetCharacterAndAttack()
