@@ -26,10 +26,13 @@ namespace DevoirMaison.Characters
         {
             //Creates a double of himself
             //Doubles can cumulate
-            //Illusionist _double = new Illusionist("Double", battleGround);
-            //_double.IsClone = true;
-            //battleGround.Characters.Add(_double);
-            //Console.WriteLine("Clony boi cloned himself !");
+            if (!IsClone)
+            {
+                Illusionist _double = new Illusionist("Double", battleGround);
+                _double.IsClone = true;
+                battleGround.Characters.Add(_double);
+                Console.WriteLine("Clony boi cloned himself !");
+            }
         }
 
         public override int RollAttack()

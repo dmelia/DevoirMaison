@@ -32,7 +32,7 @@ namespace DevoirMaison.Characters
         public override void TargetCharacterAndAttack()
         {
             //Targets undead in priority
-            Character target = battleGround.FindFirstTarget(false, this, true);
+            Character target = battleGround.FindTarget(false, this, true);
             int attackValue = RollAttack();
             int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
             if (damageTaken > 0)

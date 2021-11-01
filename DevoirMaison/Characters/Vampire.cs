@@ -27,7 +27,7 @@ namespace DevoirMaison.Characters
         public override void SpecialPower()
         {
             //Selects a random target and increases its attack delay of an amount equal to damage that the bloody boi received since the last use of his power
-            Character target = battleGround.FindFirstTarget(true, this, false);
+            Character target = battleGround.FindTarget(true, this, false);
             var targetAttackCooldown = target.AttackCooldown;
             Interlocked.Add(ref targetAttackCooldown, _damageTakenCounter);
             _damageTakenCounter = 0;
@@ -49,7 +49,7 @@ namespace DevoirMaison.Characters
         public override void TargetCharacterAndAttack()
         {
             //Bloody boi heals himself for 50% of damage dealt to target
-            Character target = battleGround.FindFirstTarget(false, this, false);
+            Character target = battleGround.FindTarget(false, this, false);
             int attackValue = RollAttack();
             int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
             if (damageTaken > 0)

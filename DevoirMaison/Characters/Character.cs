@@ -7,6 +7,7 @@ using Timer = System.Timers.Timer;
 
 namespace DevoirMaison.Characters
 {
+    public delegate void DeathEventHandler(Object sender, DeathEventArgs e);
     public abstract class Character
     {
         private static int _poisonCooldown = 5000;
@@ -53,7 +54,7 @@ namespace DevoirMaison.Characters
 
         public virtual void TargetCharacterAndAttack()
         {
-            Character target = battleGround.FindFirstTarget(false, this, false);
+            Character target = battleGround.FindTarget(false, this, false);
             int attackValue = RollAttack();
             int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
             if (damageTaken > 0)
@@ -103,6 +104,8 @@ namespace DevoirMaison.Characters
                 _deathMessageSaid = true;
                 Console.WriteLine("{0} died !", Name);
                 IsDead = true;
+                DeathEventArgs args = new DeathEventArgs();
+                OnCharacterDead(args);
             }
         }
 
@@ -112,7 +115,7 @@ namespace DevoirMaison.Characters
             int defenseRoll = RollDefense();
             double damageReduction = (double) Damages / 100.0;
             int damageTaken;
-            //Deal with zombie having 0 defense - lol
+            //Deal with zombie having 0 defense
             if (damageReduction > 0)
             {
                 damageTaken = (int) ((amount - defenseRoll) * damageReduction);
@@ -128,9 +131,12 @@ namespace DevoirMaison.Characters
                 if (defenseRoll < amount)
                 {
                     IsDead = true;
+                    Console.WriteLine("{0} clone died !", Name);
                     //Doubles leave no exploitable corpses
                     IsCorpseConsumed = true;
                     //Defense was unsuccessful
+                    DeathEventArgs args = new DeathEventArgs();
+                    OnCharacterDead(args);
                     return damageTaken;
                 }
             }
@@ -144,7 +150,7 @@ namespace DevoirMaison.Characters
                 int normalDamage = (int) (damageTaken * heroDamage.NormalDamagePercentage);
                 int sacredDamage = (int) (damageTaken * heroDamage.SacredDamagePercentage);
 
-                if (!IsImmuneToPoison)
+                if (!IsImmuneToPoison && poisonAmount > 0)
                 {
                     //Take poison damage
                     PoisonCounter += poisonAmount;
@@ -172,6 +178,9 @@ namespace DevoirMaison.Characters
                     {
                         CurrentLife = 0;
                         IsDead = true;
+                        Console.WriteLine("{0} died from a critical hit !", Name);
+                        DeathEventArgs args = new DeathEventArgs();
+                        OnCharacterDead(args);
                     }
                 }
 
@@ -220,10 +229,9 @@ namespace DevoirMaison.Characters
                 {
                     while (!IsDead && battleGround.ArePlayersFighting())
                     {
-                        AttackAction();
-                        
                         await Task.Delay(_attackCooldownAmount + AttackCooldown);
                         _attackCooldownAmount = 0;
+                        AttackAction();
                     }
                 });
         }
@@ -250,17 +258,10 @@ namespace DevoirMaison.Characters
 
         public void PoisonedElapsedHandler(object source, ElapsedEventArgs args)
         {
-            if (!IsDead && battleGround.ArePlayersFighting())
+            if (!IsDead && battleGround.ArePlayersFighting() && CharacterStatus == CharacterStatus.Poisoned)
             {
-                //Take Poison Damage if poisoned
-                Task.Run(() =>
-                {
-                    if (CharacterStatus == CharacterStatus.Poisoned)
-                    {
-                        Task.Delay(_poisonCooldown);
-                        TakeDamage(PoisonCounter);
-                    }
-                });
+                Console.WriteLine("{0} took {1} poison damage !", Name, PoisonCounter);
+                TakeDamage(PoisonCounter);
             }
         }
 
@@ -270,5 +271,20 @@ namespace DevoirMaison.Characters
             TimeSpan span = now - start;
             return (int) span.TotalMilliseconds;
         }
+        
+        #region Death event
+
+        public event DeathEventHandler Death;
+
+        protected void OnCharacterDead(DeathEventArgs e)
+        {
+            DeathEventHandler handler = Death;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        #endregion
     }
 }

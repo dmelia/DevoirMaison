@@ -9,7 +9,7 @@ namespace DevoirMaison.Characters
         private readonly int BaseAttack = 0;
         private readonly int BaseDefense = 10;
         private readonly int BaseMaximumLife = 275;
-        
+
         public Necromancer(string name, BattleGround battleGround)
         {
             Name = name;
@@ -30,13 +30,11 @@ namespace DevoirMaison.Characters
 
         public override void SpecialPower()
         {
-            int deadCharacters = battleGround.CountDeadCharacters();
             //If no one is dead and character is not poisoned, gain camouflage
             if (battleGround.AreAllPlayersAlive() && CharacterStatus != CharacterStatus.Poisoned)
             {
                 CharacterStatus = CharacterStatus.Hidden;
             }
-            //Each time a fighter dies, the bony boi gains 5 attack/5 defense/50 life/50 max life TODO
         }
 
         public override int RollAttack()
@@ -55,6 +53,21 @@ namespace DevoirMaison.Characters
         {
             //rolls are 1 - 150
             return Defense + DiceService.RollDice(1, 150);
+        }
+
+        public void GetBuffed(Object sender, DeathEventArgs args)
+        {
+            if (!IsDead)
+            {
+                //Each time a fighter dies, the bony boi gains 5 attack/5 defense/50 life/50 max life
+                Attack = Attack + 5;
+                Defense = Defense + 5;
+                CurrentLife = CurrentLife + 50;
+                MaximumLife = MaximumLife + 50;
+                Console.WriteLine(
+                    "{0} got buffed because someone died. Damage : {1}, Defense : {2}, MaxLife : {3}, CurrentLife : {4}",
+                    Name, Attack, Defense, MaximumLife, CurrentLife);
+            }
         }
     }
 }

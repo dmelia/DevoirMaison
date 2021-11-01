@@ -26,9 +26,8 @@ namespace DevoirMaison.Characters
 
         public override void SpecialPower()
         {
-            Console.WriteLine("Boop Beep ! {0}, increased its attack by 50% !", Name);
             Attack = (int) (Attack  * 1.5);
-            Console.WriteLine("Attack : {0}", Attack);
+            Console.WriteLine("Boop Beep ! {0}, increased its attack by 50% ! Attack : {1}", Name, Attack);
         }
 
         

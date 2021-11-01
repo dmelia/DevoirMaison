@@ -31,6 +31,26 @@ namespace DevoirMaison.Combat
             Characters.Add(new Vampire("Bloody-boi", this));
             Characters.Add(new Warrior("Hitty-boi", this));
             Characters.Add(new Zombie("Bitey-boi", this));
+
+            List<Necromancer> necromancers = new List<Necromancer>();
+            foreach (var character in Characters)
+            {
+                if(character.GetType() == typeof(Necromancer))
+                {
+                    necromancers.Add(character as Necromancer);
+                }
+            }
+
+            foreach (var necromancer in necromancers)
+            {
+                foreach (var character in Characters)
+                {
+                    if (character != necromancer)
+                    {
+                        character.Death += necromancer.GetBuffed;
+                    }
+                }
+            }
         }
 
         public void StartBattle()
@@ -47,12 +67,14 @@ namespace DevoirMaison.Combat
 
         public bool AreAllPlayersAlive()
         {
-            return Characters.Any(character => character.IsDead);
+            bool result = Characters.Any(character => character.IsDead);
+            return result;
         }
         
         public bool ArePlayersFighting()
         {
-            return Characters.Count(character => !character.IsDead) > 1;
+            bool result = Characters.Count(character => !character.IsDead) > 1;
+            return result;
         }
 
         //Returns a random consumable corpse
@@ -68,18 +90,20 @@ namespace DevoirMaison.Combat
         //Returns the current character with the highest life value on the battle field
         public Character FindHighestHealthCharacter()
         {
-            return Characters.OrderByDescending(character => character.CurrentLife)
+            Character result = Characters.OrderByDescending(character => character.CurrentLife)
                 .First(character => !character.IsDead);
+            return result;
         }
 
         //Finds all living characters except the character that invoked the call
         public List<Character> FindLivingCharacters(Character self)
         {
-            return Characters.FindAll(character => !character.IsDead && character != self);
+            List<Character> result = Characters.FindAll(character => !character.IsDead && character != self);
+            return result;
         }
 
         //Returns a random character that can be targeted, except self
-        public Character FindFirstTarget(bool canTargetHidden, Character self, bool prioritiseUndead)
+        public Character FindTarget(bool canTargetHidden, Character self, bool prioritiseUndead)
         {
             if (Characters.Count(character => !character.IsDead) <= 5)
             {
@@ -107,53 +131,9 @@ namespace DevoirMaison.Combat
             return potentialTargets[rand];
         }
 
-        //Returns random characters that can be targeted
-        public List<Character> FindTargets(bool canTargetHidden, int amount)
-        {
-            if (Characters.Count(character => !character.IsDead) <= 5)
-            {
-                //Hidden does nothing if there are less than 5 characters alive
-                canTargetHidden = true;
-            }
-            
-            List<Character> potentialTargets;
-            List<Character> targets = new List<Character>();
-            if (!canTargetHidden)
-            {
-                potentialTargets = Characters.FindAll(character =>
-                    !character.IsDead && character.CharacterStatus != CharacterStatus.Hidden);
-            }
-            else
-            {
-                potentialTargets = Characters.FindAll(character => !character.IsDead);
-            }
-
-            var random = new Random(DateTime.Now.Millisecond);
-
-            if (potentialTargets.Count < amount)
-            {
-                amount = potentialTargets.Count;
-            }
-
-            for (int i = 1; i < amount; i++)
-            {
-                int count = potentialTargets.Count;
-                int rand = random.Next(count);
-                targets.Add(potentialTargets[rand]);
-                potentialTargets.RemoveAt(rand);
-            }
-
-            return targets;
-        }
-
         public int CountDoubles()
         {
             return Characters.FindAll(character => character.IsClone && !character.IsDead).Count;
-        }
-
-        public int CountDeadCharacters()
-        {
-            return Characters.FindAll(character => !character.IsClone && character.IsDead).Count;
         }
     }
 }
