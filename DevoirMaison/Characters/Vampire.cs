@@ -49,9 +49,18 @@ namespace DevoirMaison.Characters
         public override void TargetCharacterAndAttack()
         {
             //Bloody boi heals himself for 50% of damage dealt to target
-            //todo
+            Character target = battleGround.FindFirstTarget(false, this, false);
+            int attackValue = RollAttack();
+            int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
+            if (damageTaken > 0)
+            {
+                Console.WriteLine("{0} attacked {1}, dealt {2} damage and healed himself for {3} damage", Name, target.Name, damageTaken, damageTaken/2);
+            }
+            else
+            {
+                Console.WriteLine("{0} attacked {1}, but it was blocked", Name, target.Name);
+            }
+            GainLife(damageTaken/2);
         }
-        //Double damage from Sacred
-        
     }
 }

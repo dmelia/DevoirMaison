@@ -9,7 +9,8 @@ namespace DevoirMaison
 
         public static int RollDice(int start, int end)
         {
-            return _random.Next(start, end);
+            int roll = _random.Next(start, end + 1);
+            return roll;
         }
     }
 }

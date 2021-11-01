@@ -81,6 +81,12 @@ namespace DevoirMaison.Combat
         //Returns a random character that can be targeted, except self
         public Character FindFirstTarget(bool canTargetHidden, Character self, bool prioritiseUndead)
         {
+            if (Characters.Count(character => !character.IsDead) <= 5)
+            {
+                //Hidden does nothing if there are less than 5 characters alive
+                canTargetHidden = true;
+            }
+            
             List<Character> potentialTargets;
             if (!canTargetHidden)
             {
@@ -104,6 +110,12 @@ namespace DevoirMaison.Combat
         //Returns random characters that can be targeted
         public List<Character> FindTargets(bool canTargetHidden, int amount)
         {
+            if (Characters.Count(character => !character.IsDead) <= 5)
+            {
+                //Hidden does nothing if there are less than 5 characters alive
+                canTargetHidden = true;
+            }
+            
             List<Character> potentialTargets;
             List<Character> targets = new List<Character>();
             if (!canTargetHidden)

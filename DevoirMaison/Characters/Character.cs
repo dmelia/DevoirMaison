@@ -43,8 +43,6 @@ namespace DevoirMaison.Characters
 
         public bool IsImmuneToPoison { get; set; } = false;
 
-        private bool _hasCooldownChanged = false;
-
         private int _attackCooldownAmount = 0;
 
         private bool _deathMessageSaid = false;
@@ -58,7 +56,14 @@ namespace DevoirMaison.Characters
             Character target = battleGround.FindFirstTarget(false, this, false);
             int attackValue = RollAttack();
             int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
-            Console.WriteLine("{0} attacked {1}, dealt {2} damage", Name, target.Name, damageTaken);
+            if (damageTaken > 0)
+            {
+                Console.WriteLine("{0} attacked {1}, dealt {2} damage", Name, target.Name, damageTaken);
+            }
+            else
+            {
+                Console.WriteLine("{0} attacked {1}, but it was blocked", Name, target.Name);
+            }
         }
 
         public virtual int RollAttack()
@@ -116,7 +121,7 @@ namespace DevoirMaison.Characters
             {
                 damageTaken = amount - defenseRoll;
             }
-            
+
             if (IsClone)
             {
                 //If hit and takes damage, double is destroyed
@@ -180,69 +185,72 @@ namespace DevoirMaison.Characters
 
         public virtual void AddAttackCooldown(int amount)
         {
-            _hasCooldownChanged = true;
             _attackCooldownAmount += amount;
         }
 
-        private Timer _timer;
 
         public virtual void StartLife()
         {
-            //Todo : Fix execution timers
-            Console.WriteLine("{0} is joining the fight ! The character is a {1} {2}", Name, CharacterType,
-                this.GetType().Name);
-            _timer = new Timer();
-            _timer.Elapsed += (_, _) =>
-            {
-                if (IsDead || !battleGround.ArePlayersFighting()) _timer.Stop();
-            };
-            _timer.Elapsed += AttackElapsedHandler;
-            _timer.Elapsed += PowerElapsedHandler;
-            _timer.Elapsed += PoisonedElapsedHandler;
-            _timer.Enabled = true;
+            Console.WriteLine("{0} is joining the fight ! {1} is a {2}", Name, CharacterType,
+                GetType().Name);
+            Timer powerTimer = new Timer(GetPowerDelay());
+            powerTimer.Elapsed += DeathHandler;
+            powerTimer.Elapsed += PowerElapsedHandler;
+            Timer poisonTimer = new Timer(5000);
+            poisonTimer.Elapsed += DeathHandler;
+            poisonTimer.Elapsed += PoisonedElapsedHandler;
+
+            powerTimer.Enabled = true;
+            poisonTimer.Enabled = true;
+            AttackHandler();
         }
 
-        public void AttackElapsedHandler(object source, ElapsedEventArgs args)
+        public void DeathHandler(object source, ElapsedEventArgs args)
         {
-            if (!IsDead)
+            if (IsDead || !battleGround.ArePlayersFighting())
             {
-                Task.Delay(AttackCooldown);
-                if (_hasCooldownChanged)
-                {
-                    Task.Delay(_attackCooldownAmount);
-                    _attackCooldownAmount = 0;
-                    _hasCooldownChanged = false;
-                }
-                Task.Run(() =>
-                {
-                    //Lose stealth if character was hidden
-                    if (CharacterStatus == CharacterStatus.Hidden) CharacterStatus = CharacterStatus.Normal;
-
-                    //Attack
-                    TargetCharacterAndAttack();
-
-                    //Roll attack delay
-                    AttackCooldown = RollAttackSpeed();
-                });
+                Timer changeType = source as Timer;
+                changeType?.Stop();
             }
+        }
+
+        public void AttackHandler()
+        {
+            Task.Run(async () =>
+                {
+                    while (!IsDead && battleGround.ArePlayersFighting())
+                    {
+                        AttackAction();
+                        
+                        await Task.Delay(_attackCooldownAmount + AttackCooldown);
+                        _attackCooldownAmount = 0;
+                    }
+                });
+        }
+
+        private void AttackAction()
+        {
+            //Lose stealth if character was hidden
+            if (CharacterStatus == CharacterStatus.Hidden) CharacterStatus = CharacterStatus.Normal;
+
+            //Attack
+            TargetCharacterAndAttack();
+
+            //Roll attack delay
+            AttackCooldown = RollAttackSpeed();
         }
 
         public void PowerElapsedHandler(object source, ElapsedEventArgs args)
         {
-            if (!IsDead)
+            if (!IsDead && battleGround.ArePlayersFighting())
             {
-                //Use power
-                Task.Run(() =>
-                {
-                    Task.Delay(GetPowerDelay());
-                    SpecialPower();
-                });
+                SpecialPower();
             }
         }
 
         public void PoisonedElapsedHandler(object source, ElapsedEventArgs args)
         {
-            if (!IsDead)
+            if (!IsDead && battleGround.ArePlayersFighting())
             {
                 //Take Poison Damage if poisoned
                 Task.Run(() =>
