@@ -30,11 +30,11 @@ namespace DevoirMaison.Characters
             Character target = battleGround.FindTarget(true, this, false);
             var targetAttackCooldown = target.AttackCooldown;
             Interlocked.Add(ref targetAttackCooldown, _damageTakenCounter);
+            Console.WriteLine("Bloody boi made {0} slow down by {1} !", target.Name, _damageTakenCounter);
             _damageTakenCounter = 0;
-            Console.WriteLine("Bloody boi made {0} slow down !", target.Name);
         }
         
-        public virtual void TakeDamage(int amount)
+        public override void TakeDamage(int amount)
         {
             CurrentLife -= amount;
             if (CurrentLife <= 0)

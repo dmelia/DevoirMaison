@@ -96,7 +96,7 @@ namespace DevoirMaison.Characters
             }
         }
 
-        public void TakeDamage(int amount)
+        public virtual void TakeDamage(int amount)
         {
             CurrentLife -= amount;
             if (CurrentLife <= 0 && !_deathMessageSaid)

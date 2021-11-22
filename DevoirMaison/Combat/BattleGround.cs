@@ -73,7 +73,8 @@ namespace DevoirMaison.Combat
         
         public bool ArePlayersFighting()
         {
-            bool result = Characters.Count(character => !character.IsDead) > 1;
+            List<Character> currentCharacters = Characters.FindAll(character => true);
+            bool result = currentCharacters.Count(character => !character.IsDead) > 1;
             return result;
         }
 
