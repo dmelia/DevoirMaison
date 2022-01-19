@@ -9,7 +9,7 @@ namespace DevoirMaison
     {
         static void Main(string[] args)
         {
-            for(int i = 0; i< 50; i++) {
+            //for(int i = 0; i< 50; i++) {
             BattleGround battleGround = new BattleGround();
             battleGround.PopulateBattleGround();
             battleGround.StartBattle();
@@ -23,8 +23,8 @@ namespace DevoirMaison
             Character winner = battleGround.Characters.Find(character => !character.IsDead);
             Console.WriteLine("Winner was : {0}", winner?.Name);
             StatisticsService.SaveCharacterWon(winner);
+            //}
             StatisticsService.ShowCharacterWins();
-            }
             Console.Read();
         }
     }

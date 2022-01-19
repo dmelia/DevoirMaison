@@ -17,7 +17,7 @@ namespace DevoirMaison.Statistics
             string[] names = CharacterNames.Split(";");
             string[] values = line.Split(";");
 
-            for (int i = 0; i < names.Length - 1; i++)
+            for (int i = 0; i < names.Length; i++)
             {
                 Console.WriteLine("{0} has : {1} wins", names[i], values[i]);
             }
