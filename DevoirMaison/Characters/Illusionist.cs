@@ -26,11 +26,12 @@ namespace DevoirMaison.Characters
         {
             //Creates a double of himself
             //Doubles can cumulate
-            if (!IsClone)
+            if (!IsClone && !IsDead)
             {
                 Illusionist _double = new Illusionist("Double", battleGround);
                 _double.IsClone = true;
                 battleGround.Characters.Add(_double);
+                _double.StartLife();
                 Console.WriteLine("Clony boi cloned himself !");
             }
         }

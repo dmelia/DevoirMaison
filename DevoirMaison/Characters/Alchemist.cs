@@ -26,46 +26,52 @@ namespace DevoirMaison.Characters
 
         public override void SpecialPower()
         {
-            //Exchange current life value with highest current life value of any hero in combat
-            //After trade, new values of current life cannot exceed maximum life
-            Character target = battleGround.FindHighestHealthCharacter();
-            int targetsHealth = target.CurrentLife;
-            target.CurrentLife = CurrentLife;
-            if (target.CurrentLife > target.MaximumLife)
+            if (!IsDead)
             {
-                target.CurrentLife = target.MaximumLife;
-            }
+                //Exchange current life value with highest current life value of any hero in combat
+                //After trade, new values of current life cannot exceed maximum life
+                Character target = battleGround.FindHighestHealthCharacter();
+                int targetsHealth = target.CurrentLife;
+                target.CurrentLife = CurrentLife;
+                if (target.CurrentLife > target.MaximumLife)
+                {
+                    target.CurrentLife = target.MaximumLife;
+                }
 
-            CurrentLife = targetsHealth;
-            if (CurrentLife > MaximumLife)
-            {
-                CurrentLife = MaximumLife;
+                CurrentLife = targetsHealth;
+                if (CurrentLife > MaximumLife)
+                {
+                    CurrentLife = MaximumLife;
+                }
+                Console.WriteLine("Potion-y boi exchanged his life !");
             }
-            Console.WriteLine("Potion-y boi exchanged his life !");
         }
 
         public override void TargetCharacterAndAttack()
         {
-            //All characters have 50% chance to be targeted by the Alchemist's attack
-            //All characters are considered as secondary targets (can hit even hidden characters)
-            List<Character> targets = battleGround.FindLivingCharacters(this);
-            
-            foreach (var target in targets)
+            if (!IsDead)
             {
-                if (DiceService.RollDice(0,1) == 1)
+                //All characters have 50% chance to be targeted by the Alchemist's attack
+                //All characters are considered as secondary targets (can hit even hidden characters)
+                List<Character> targets = battleGround.FindLivingCharacters(this);
+            
+                foreach (var target in targets)
                 {
-                    //Attack character (50% chance)
-                    int attackValue = RollAttack();
-                    int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
-                    if (damageTaken > 0)
+                    if (DiceService.RollDice(0,1) == 1)
                     {
-                        Console.WriteLine("{0} attacked {1}, dealt {2} damage", Name, target.Name, damageTaken);
+                        //Attack character (50% chance)
+                        int attackValue = RollAttack();
+                        int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
+                        if (damageTaken > 0)
+                        {
+                            Console.WriteLine("{0} attacked {1}, dealt {2} damage", Name, target.Name, damageTaken);
+                        }
+                        else
+                        {
+                            Console.WriteLine("{0} attacked {1}, but it was blocked", Name, target.Name);
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("{0} attacked {1}, but it was blocked", Name, target.Name);
-                    }
-                }
+                } 
             }
         }
 

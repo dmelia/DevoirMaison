@@ -54,16 +54,19 @@ namespace DevoirMaison.Characters
 
         public virtual void TargetCharacterAndAttack()
         {
-            Character target = battleGround.FindTarget(false, this, false);
-            int attackValue = RollAttack();
-            int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
-            if (damageTaken > 0)
+            if (!IsDead)
             {
-                Console.WriteLine("{0} attacked {1}, dealt {2} damage", Name, target.Name, damageTaken);
-            }
-            else
-            {
-                Console.WriteLine("{0} attacked {1}, but it was blocked", Name, target.Name);
+                Character target = battleGround.FindTarget(false, this, false);
+                int attackValue = RollAttack();
+                int damageTaken = target.TakeAttackDamage(attackValue, HeroDamage, false);
+                if (damageTaken > 0)
+                {
+                    Console.WriteLine("{0} attacked {1}, dealt {2} damage", Name, target.Name, damageTaken);
+                }
+                else
+                {
+                    Console.WriteLine("{0} attacked {1}, but it was blocked", Name, target.Name);
+                } 
             }
         }
 

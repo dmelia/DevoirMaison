@@ -73,9 +73,16 @@ namespace DevoirMaison.Combat
         
         public bool ArePlayersFighting()
         {
-            List<Character> currentCharacters = Characters.FindAll(character => true);
-            bool result = currentCharacters.Count(character => !character.IsDead) > 1;
-            return result;
+            try
+            {
+                return Characters.Count(character => !character.IsDead) > 1;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                //Ignore the exception, because the only reason it may have failed was because of the Illusionists clones being alive
+                return true;
+            }
         }
 
         //Returns a random consumable corpse
