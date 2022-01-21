@@ -208,7 +208,7 @@ namespace DevoirMaison.Characters
             Timer powerTimer = new Timer(GetPowerDelay());
             powerTimer.Elapsed += DeathHandler;
             powerTimer.Elapsed += PowerElapsedHandler;
-            Timer poisonTimer = new Timer(5000);
+            Timer poisonTimer = new Timer(_poisonCooldown);
             poisonTimer.Elapsed += DeathHandler;
             poisonTimer.Elapsed += PoisonedElapsedHandler;
 
